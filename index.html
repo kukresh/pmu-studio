@@ -16,18 +16,8 @@
     .font-serif-beauty {
       font-family: 'Playfair Display', serif;
     }
-    .gold-gradient {
-      background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa771c 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .rose-gradient {
-      background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 50%, #db2777 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
     .glass-panel {
-      background: rgba(22, 19, 23, 0.7);
+      background: rgba(22, 19, 23, 0.75);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(244, 114, 182, 0.15);
     }
@@ -117,7 +107,7 @@
             <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Источник изображения</label>
             <div class="grid grid-cols-3 gap-2 text-xs">
               <button onclick="setMode('ai')" id="mode-ai" class="mode-btn p-2 rounded-lg border border-pink-500/60 bg-pink-950/40 text-pink-200 text-center font-medium">
-                🤖 Нейросеть AI
+                ✨ PMU Фото-AI
               </button>
               <button onclick="setMode('preset')" id="mode-preset" class="mode-btn p-2 rounded-lg border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-center">
                 📸 PMU Макрос
@@ -132,17 +122,17 @@
           <div class="space-y-3">
             <div>
               <label class="block text-xs text-zinc-400 mb-1">Главный заголовок (Хук)</label>
-              <input type="text" id="input-title" value="Зажившие губы: натуральный нюд без контура" 
+              <input type="text" id="input-title" value="Межресничка: выразительный взгляд 24/7" 
                      oninput="updateCanvas()" class="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-sm text-white focus:outline-none focus:border-pink-500">
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">Подзаголовок / Польза</label>
-              <input type="text" id="input-subtitle" value="Срок носки 1.5–2 года. Сразу после процедуры нет отека" 
+              <input type="text" id="input-subtitle" value="Заполнение ресничного края с легкой теневой растушевкой" 
                      oninput="updateCanvas()" class="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-sm text-white focus:outline-none focus:border-pink-500">
             </div>
             <div>
               <label class="block text-xs text-zinc-400 mb-1">Бейдж / Статус</label>
-              <input type="text" id="input-badge" value="Заживший результат • 30 дней" 
+              <input type="text" id="input-badge" value="Анатомическая стрелка • PMU" 
                      oninput="updateCanvas()" class="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-sm text-white focus:outline-none focus:border-pink-500">
             </div>
           </div>
@@ -151,7 +141,7 @@
           <div class="pt-2 flex flex-col gap-2">
             <button onclick="triggerGenerateImage()" id="btn-gen-img" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-pink-600 via-rose-500 to-amber-500 text-white font-semibold text-sm shadow-lg shadow-pink-900/30 flex items-center justify-center gap-2 hover:opacity-95 transition">
               <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-              Сгенерировать новое фото
+              Сменить ракурс / фото
             </button>
             <input type="file" id="file-input" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
             <button onclick="document.getElementById('file-input').click()" id="btn-upload-file" class="hidden w-full py-2.5 px-4 rounded-xl border border-pink-500/40 bg-pink-950/30 text-pink-300 font-medium text-xs flex items-center justify-center gap-2 hover:bg-pink-900/40 transition">
@@ -184,7 +174,7 @@
           <!-- Loading Spinner Overlay -->
           <div id="canvas-loader" class="absolute inset-0 bg-black/70 backdrop-blur-sm hidden flex-col items-center justify-center gap-3">
             <div class="w-10 h-10 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="text-xs text-pink-200 font-medium">Генерация макро-фотографии PMU...</p>
+            <p class="text-xs text-pink-200 font-medium">Загрузка макро-визуала...</p>
           </div>
         </div>
 
@@ -210,14 +200,8 @@
             <h2 class="text-lg font-bold text-white">Готовая контент-матрица для PMU на 14 дней</h2>
             <p class="text-xs text-zinc-400">Прогревы, закрытие возражений, зажившие результаты и окошки</p>
           </div>
-          <button onclick="generateNewPlan()" class="px-4 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white text-xs font-semibold flex items-center gap-2">
-            <i data-lucide="sparkles" class="w-4 h-4"></i> Пересоздать план
-          </button>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="plan-grid">
-          <!-- Cards will be populated by JS -->
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="plan-grid"></div>
       </div>
     </div>
 
@@ -229,22 +213,19 @@
             <i data-lucide="cpu" class="w-5 h-5 text-pink-400"></i> Облачный воркер
           </h3>
           <p class="text-xs text-zinc-400 leading-relaxed">
-            Воркер работает в облаке независимо от вашего телефона или компьютера, каждые 60 секунд проверяя очередь расписания и отправляя посты через Instagram Graph API.
+            Воркер работает в облаке независимо от вашего телефона или компьютера, проверяя очередь расписания и отправляя посты в Instagram.
           </p>
           <div class="p-3 rounded-xl bg-zinc-900 border border-zinc-800 space-y-2 text-xs">
             <div class="flex justify-between text-zinc-400"><span>Статус сервера:</span><span class="text-emerald-400">Онлайн (24/7)</span></div>
-            <div class="flex justify-between text-zinc-400"><span>Часовой пояс:</span><span class="text-zinc-200">Минск / Москва (UTC+3)</span></div>
-            <div class="flex justify-between text-zinc-400"><span>Постов в очереди:</span><span class="text-pink-400 font-bold" id="queue-count">4 поста</span></div>
+            <div class="flex justify-between text-zinc-400"><span>Часовой пояс:</span><span class="text-zinc-200">UTC+3</span></div>
           </div>
         </div>
 
         <div class="lg:col-span-2 glass-panel rounded-2xl p-6 space-y-4">
           <h3 class="text-md font-semibold text-white flex items-center gap-2">
-            <i data-lucide="calendar" class="w-5 h-5 text-pink-400"></i> Очередь ближайших публикаций
+            <i data-lucide="calendar" class="w-5 h-5 text-pink-400"></i> Очередь публикаций
           </h3>
-          <div class="space-y-3" id="queue-list">
-            <!-- Queue items populated by JS -->
-          </div>
+          <div class="space-y-3" id="queue-list"></div>
         </div>
       </div>
     </div>
@@ -252,59 +233,37 @@
   </main>
 
   <script>
-    // State
-    let currentProc = 'lips';
-    let currentFormat = 'post'; // 'post' (4:5) or 'story' (9:16)
-    let currentMode = 'ai'; // 'ai', 'preset', 'upload'
+    let currentProc = 'eyes';
+    let currentFormat = 'post';
+    let currentMode = 'ai';
     let currentImg = new Image();
     let isImgLoaded = false;
+    let photoIndex = 0;
 
-    // Presets with guaranteed fallback SVG data URIs
-    const presets = {
+    // Высококачественные макро-снимки без ограничений скорости и лимитов
+    const beautyGallery = {
       lips: [
         'https://images.unsplash.com/photo-1588515724527-074a7a56616c?auto=format&fit=crop&w=1080&q=80',
-        'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=1080&q=80'
+        'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=1080&q=80',
+        'https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&w=1080&q=80'
       ],
       brows: [
         'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1080&q=80',
-        'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1080&q=80'
+        'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1080&q=80',
+        'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1080&q=80'
       ],
       eyes: [
         'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1080&q=80',
-        'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1080&q=80'
+        'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1080&q=80',
+        'https://images.unsplash.com/photo-1576426863848-c21f53c60b19?auto=format&fit=crop&w=1080&q=80'
       ]
     };
-
-    // Procedural SVG Fallback generator (гарантия 100% отображения)
-    function generateProceduralFallback(type) {
-      let grad1 = '#831843', grad2 = '#f43f5e', text = 'PMU Lips Master';
-      if(type === 'brows') {
-        grad1 = '#451a03'; grad2 = '#b45309'; text = 'Powder Brows';
-      } else if(type === 'eyes') {
-        grad1 = '#18181b'; grad2 = '#4c1d95'; text = 'Eyeliner PMU';
-      }
-
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350">
-        <defs>
-          <radialGradient id="bg" cx="50%" cy="40%" r="60%">
-            <stop offset="0%" stop-color="${grad2}" stop-opacity="0.6"/>
-            <stop offset="100%" stop-color="${grad1}" stop-opacity="0.95"/>
-          </radialGradient>
-        </defs>
-        <rect width="1080" height="1350" fill="#09090b"/>
-        <circle cx="540" cy="500" r="420" fill="url(#bg)"/>
-        <ellipse cx="540" cy="560" rx="260" ry="120" fill="${grad2}" opacity="0.4" filter="blur(40px)"/>
-        <text x="540" y="550" fill="#fdf2f8" font-size="44" font-family="sans-serif" font-weight="bold" text-anchor="middle" letter-spacing="4">${text}</text>
-        <text x="540" y="610" fill="#fbcfe8" font-size="22" font-family="sans-serif" text-anchor="middle" opacity="0.8">PERMANENT MAKEUP STUDIO</text>
-      </svg>`;
-      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-    }
 
     function init() {
       lucide.createIcons();
       loadPlanCards();
       loadQueueItems();
-      triggerGenerateImage();
+      selectProcedure('eyes');
     }
 
     function switchTab(tab) {
@@ -320,12 +279,12 @@
 
     function selectProcedure(proc) {
       currentProc = proc;
+      photoIndex = 0;
       document.querySelectorAll('.proc-btn').forEach(b => {
         b.className = 'proc-btn p-3 rounded-xl border border-zinc-800 bg-zinc-900/50 text-zinc-300 text-xs font-medium text-center hover:border-pink-500/40 transition';
       });
       document.getElementById(`proc-${proc}`).className = 'proc-btn p-3 rounded-xl border border-pink-500/50 bg-pink-950/30 text-pink-200 text-xs font-medium text-center';
 
-      // Обновляем тексты
       if(proc === 'lips') {
         document.getElementById('input-title').value = 'Зажившие губы: натуральный нюд без контура';
         document.getElementById('input-subtitle').value = 'Срок носки 1.5–2 года. Сразу после процедуры нет отека';
@@ -337,7 +296,7 @@
       } else {
         document.getElementById('input-title').value = 'Межресничка: выразительный взгляд 24/7';
         document.getElementById('input-subtitle').value = 'Заполнение ресничного края с легкой теневой растушевкой';
-        document.getElementById('input-badge').value = 'Анатомическая стрелка';
+        document.getElementById('input-badge').value = 'Анатомическая стрелка • PMU';
       }
 
       triggerGenerateImage();
@@ -349,7 +308,6 @@
         b.className = 'fmt-btn p-2.5 rounded-xl border border-zinc-800 bg-zinc-900/50 text-zinc-400 text-xs flex items-center justify-center gap-2';
       });
       document.getElementById(`fmt-${fmt}`).className = 'fmt-btn p-2.5 rounded-xl border border-pink-500/50 bg-pink-950/30 text-pink-200 text-xs flex items-center justify-center gap-2';
-      
       document.getElementById('res-label').innerText = fmt === 'post' ? '1080 × 1350 px (4:5)' : '1080 × 1920 px (9:16)';
       updateCanvas();
     }
@@ -375,26 +333,13 @@
       const loader = document.getElementById('canvas-loader');
       loader.classList.remove('hidden');
 
-      let targetUrl = '';
-      const seed = Math.floor(Math.random() * 999999);
-
-      if (currentMode === 'ai') {
-        // AI image prompt
-        let promptDesc = 'macro beauty shot of natural powder brows permanent makeup soft lighting aesthetic salon';
-        if (currentProc === 'lips') {
-          promptDesc = 'macro beauty shot of natural healed velvet nude lips permanent makeup clean skin aesthetic';
-        } else if (currentProc === 'eyes') {
-          promptDesc = 'close up beauty portrait permanent eyeliner soft shaded lash line delicate eye makeup';
-        }
-        targetUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(promptDesc)}?width=1080&height=1350&nologo=true&seed=${seed}`;
-      } else {
-        const list = presets[currentProc] || presets.lips;
-        targetUrl = list[Math.floor(Math.random() * list.length)];
-      }
+      const photos = beautyGallery[currentProc] || beautyGallery.lips;
+      const targetUrl = photos[photoIndex % photos.length];
+      photoIndex++;
 
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      
+
       img.onload = () => {
         currentImg = img;
         isImgLoaded = true;
@@ -403,15 +348,9 @@
       };
 
       img.onerror = () => {
-        console.warn('Network image error, using procedural fallback');
-        const fallbackImg = new Image();
-        fallbackImg.onload = () => {
-          currentImg = fallbackImg;
-          isImgLoaded = true;
-          loader.classList.add('hidden');
-          updateCanvas();
-        };
-        fallbackImg.src = generateProceduralFallback(currentProc);
+        // Процедурный бьюти-фон в случае сбоя сети
+        drawProceduralArtwork();
+        loader.classList.add('hidden');
       };
 
       img.src = targetUrl;
@@ -434,6 +373,11 @@
       reader.readAsDataURL(file);
     }
 
+    function drawProceduralArtwork() {
+      isImgLoaded = false;
+      updateCanvas();
+    }
+
     function updateCanvas() {
       const canvas = document.getElementById('post-canvas');
       const ctx = canvas.getContext('2d');
@@ -444,7 +388,6 @@
       canvas.width = width;
       canvas.height = height;
 
-      // 1. Draw Background Image (Cover fit)
       if (isImgLoaded && currentImg.width > 0) {
         const imgRatio = currentImg.width / currentImg.height;
         const targetRatio = width / height;
@@ -463,68 +406,76 @@
         }
         ctx.drawImage(currentImg, offsetX, offsetY, renderW, renderH);
       } else {
-        ctx.fillStyle = '#18181b';
+        // Премиальный процедурный градиент
+        const gradBg = ctx.createRadialGradient(width/2, height*0.35, 100, width/2, height*0.35, width*0.8);
+        gradBg.addColorStop(0, '#831843');
+        gradBg.addColorStop(0.5, '#3b0764');
+        gradBg.addColorStop(1, '#09090b');
+        ctx.fillStyle = gradBg;
         ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#fbcfe8';
+        ctx.font = '600 32px "Playfair Display"';
+        ctx.textAlign = 'center';
+        ctx.fillText('PMU ART STUDIO • AESTHETICS', width / 2, height * 0.38);
+        ctx.textAlign = 'left';
       }
 
-      // 2. Beauty Dark Gradient Vignette for Readability
-      const gradient = ctx.createLinearGradient(0, height * 0.45, 0, height);
-      gradient.addColorStop(0, 'rgba(10, 8, 10, 0)');
-      gradient.addColorStop(0.5, 'rgba(10, 8, 10, 0.7)');
-      gradient.addColorStop(1, 'rgba(10, 8, 10, 0.96)');
+      // Затемняющий бьюти-градиент
+      const gradient = ctx.createLinearGradient(0, height * 0.42, 0, height);
+      gradient.addColorStop(0, 'rgba(11, 9, 10, 0)');
+      gradient.addColorStop(0.45, 'rgba(11, 9, 10, 0.75)');
+      gradient.addColorStop(1, 'rgba(11, 9, 10, 0.98)');
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
 
-      // Top subtle gradient
-      const topGrad = ctx.createLinearGradient(0, 0, 0, 320);
-      topGrad.addColorStop(0, 'rgba(10, 8, 10, 0.85)');
-      topGrad.addColorStop(1, 'rgba(10, 8, 10, 0)');
+      // Верхний градиент
+      const topGrad = ctx.createLinearGradient(0, 0, 0, 280);
+      topGrad.addColorStop(0, 'rgba(11, 9, 10, 0.8)');
+      topGrad.addColorStop(1, 'rgba(11, 9, 10, 0)');
       ctx.fillStyle = topGrad;
-      ctx.fillRect(0, 0, width, 320);
+      ctx.fillRect(0, 0, width, 280);
 
-      // 3. Top Branding / Badge
+      // Бейдж
       const badgeText = document.getElementById('input-badge').value.toUpperCase();
       ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
-      
       const badgeWidth = ctx.measureText(badgeText).width + 48;
-      ctx.fillStyle = 'rgba(244, 114, 182, 0.2)';
-      ctx.strokeStyle = 'rgba(244, 114, 182, 0.5)';
+      
+      ctx.fillStyle = 'rgba(244, 114, 182, 0.25)';
+      ctx.strokeStyle = 'rgba(244, 114, 182, 0.6)';
       ctx.lineWidth = 2;
-      roundRect(ctx, 80, 80, badgeWidth, 54, 27, true, true);
+      roundRect(ctx, 80, 80, badgeWidth, 52, 26, true, true);
 
       ctx.fillStyle = '#fbcfe8';
-      ctx.fillText(badgeText, 104, 115);
+      ctx.fillText(badgeText, 104, 114);
 
-      // Top Right Studio Label
-      ctx.fillStyle = '#e4e4e7';
+      // Правый верхний логотип
+      ctx.fillStyle = '#f4f4f5';
       ctx.font = '700 22px "Playfair Display", serif';
       ctx.textAlign = 'right';
-      ctx.fillText('PMU ART STUDIO', width - 80, 115);
+      ctx.fillText('PMU ART STUDIO', width - 80, 114);
       ctx.textAlign = 'left';
 
-      // 4. Main Titles at Bottom
+      // Тексты
       const title = document.getElementById('input-title').value;
       const subtitle = document.getElementById('input-subtitle').value;
-
       const textStartY = height - (currentFormat === 'post' ? 320 : 420);
 
-      // Main Title
       ctx.fillStyle = '#ffffff';
       ctx.font = '700 52px "Playfair Display", serif';
       wrapText(ctx, title, 80, textStartY, width - 160, 64);
 
-      // Subtitle
       ctx.fillStyle = '#d4d4d8';
       ctx.font = '400 28px "Plus Jakarta Sans", sans-serif';
       wrapText(ctx, subtitle, 80, textStartY + 140, width - 160, 40);
 
-      // CTA Button Banner at the bottom
+      // Кнопка CTA
       const ctaY = height - (currentFormat === 'post' ? 110 : 160);
-      const ctaGrad = ctx.createLinearGradient(80, ctaY, 500, ctaY);
+      const ctaGrad = ctx.createLinearGradient(80, ctaY, 480, ctaY);
       ctaGrad.addColorStop(0, '#db2777');
       ctaGrad.addColorStop(1, '#ea580c');
       ctx.fillStyle = ctaGrad;
-      roundRect(ctx, 80, ctaY, 380, 60, 14, true, false);
+      roundRect(ctx, 80, ctaY, 390, 60, 14, true, false);
 
       ctx.fillStyle = '#ffffff';
       ctx.font = '600 22px "Plus Jakarta Sans", sans-serif';
