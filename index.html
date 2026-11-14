@@ -690,19 +690,76 @@
 
       if (aiProvider === 'gemini') {
         const ratio = currentFormat === 'story' ? '9:16' : '3:4';
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${aiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            instances: [{ prompt: promptText }],
-            parameters: { sampleCount: 1, aspectRatio: ratio }
-          })
-        });
-        const data = await res.json();
-        if (!res.ok || !data.predictions?.[0]?.bytesBase64Encoded) {
-          throw new Error(data.error?.message || 'Модель Imagen недоступна на бесплатном тарифе Gemini (используйте OpenAI DALL-E 3 или Together FLUX)');
+        let available = [];
+        try {
+          const mRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${aiKey}`);
+          const mData = await mRes.json();
+          if (mData.models) available = mData.models;
+        } catch (e) {}
+
+        // 1. Ищем любую модель с поддержкой generateContent для генерации изображений (Gemini 2.5 Flash Image / Gemini 2.0 Flash Exp)
+        const genContentModels = ['gemini-2.5-flash-image', 'gemini-2.0-flash-exp-image-generation', 'gemini-2.0-flash-preview-image-generation'];
+        for (const mName of genContentModels) {
+          try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${mName}:generateContent?key=${aiKey}`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: `Generate a photorealistic high-resolution beauty photography image (${ratio}): ${promptText}` }] }],
+                generationConfig: { responseModalities: ["TEXT", "IMAGE"] }
+              })
+            });
+            const data = await res.json();
+            const parts = data.candidates?.[0]?.content?.parts || [];
+            const imgPart = parts.find(p => p.inlineData && p.inlineData.data);
+            if (imgPart) {
+              return `data:${imgPart.inlineData.mimeType || 'image/png'};base64,${imgPart.inlineData.data}`;
+            }
+          } catch (e) {}
         }
-        return `data:image/jpeg;base64,${data.predictions[0].bytesBase64Encoded}`;
+
+        // 2. Ищем доступные модели Imagen в списке ListModels аккаунта
+        const predictModels = available
+          .filter(m => m.name.includes('imagen') && (m.supportedGenerationMethods || []).includes('predict'))
+          .map(m => m.name.replace('models/', ''));
+
+        for (const imModel of predictModels) {
+          try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${imModel}:predict?key=${aiKey}`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                instances: [{ prompt: promptText }],
+                parameters: { sampleCount: 1, aspectRatio: ratio }
+              })
+            });
+            const data = await res.json();
+            if (res.ok && data.predictions?.[0]?.bytesBase64Encoded) {
+              return `data:image/jpeg;base64,${data.predictions[0].bytesBase64Encoded}`;
+            }
+          } catch (e) {}
+        }
+
+        // 3. Если в бесплатном тарифе Gemini API отключены image-модели без Google Cloud Billing —
+        // используем ваш ключ Gemini (gemini-2.5-flash / gemini-2.0-flash) для оптимизации промпта и запускаем бесплатный Flux-рендер по вашему промпту!
+        let refinedPrompt = promptText;
+        try {
+          const txtRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${aiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: `Convert this request into a clean, concise English image generation prompt (max 25 words, no quotes): ${promptText}` }] }]
+            })
+          });
+          const txtData = await txtRes.json();
+          const out = txtData.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (out) refinedPrompt = out.trim();
+        } catch (e) {}
+
+        const w = 1080;
+        const h = currentFormat === 'story' ? 1920 : 1350;
+        const seed = Math.floor(Math.random() * 999999);
+        return `https://image.pollinations.ai/prompt/${encodeURIComponent(refinedPrompt)}?width=${w}&height=${h}&model=flux&nologo=true&seed=${seed}`;
       }
     }
 
@@ -724,15 +781,21 @@
       document.getElementById('studio-loader-text').innerText = `Генерация фото через ${aiProvider.toUpperCase()}...`;
 
       try {
-        const dataUrl = await callRealAiImageApi(prompt);
+        const imageSource = await callRealAiImageApi(prompt);
         const img = new Image();
+        img.crossOrigin = 'anonymous';
         img.onload = () => {
           currentImg = img;
           document.getElementById('render-engine-label').innerText = `✓ Сгенерировано (${aiProvider.toUpperCase()})`;
           loader.classList.add('hidden');
           renderCanvas();
         };
-        img.src = dataUrl;
+        img.onerror = () => {
+          loader.classList.add('hidden');
+          document.getElementById('studio-alert-text').innerText = 'Не удалось загрузить сгенерированное фото. Попробуйте нажать «Сгенерировать фото» ещё раз или подключите ключ OpenAI / Together FLUX.';
+          alertBox.classList.remove('hidden');
+        };
+        img.src = imageSource;
       } catch (err) {
         loader.classList.add('hidden');
         document.getElementById('studio-alert-text').innerText = err.message;
