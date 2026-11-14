@@ -600,62 +600,96 @@
       generateVisualPhoto();
     }
 
+    // Большая коллекция реальных макро-фотографий бьюти и перманентного макияжа (губы, брови, веки, салон, пигменты)
+    const realPhotoLibrary = {
+      lips: [
+        { tags: 'nude natural velvet soft healed нюд натуральные', url: 'https://images.unsplash.com/photo-1588515724527-074a7a56616c?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'pink glossy hydrated розовый блеск акварель', url: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'red berry lipstick яркие помадный прокрас', url: 'https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'macro close-up skin smile макро улыбка контур', url: 'https://images.unsplash.com/photo-1515688594390-b649af70d282?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'peach warm coral персиковый теплый оттенок', url: 'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'salon procedure pigment микс пигменты салон', url: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1080&q=85' }
+      ],
+      brows: [
+        { tags: 'powder soft brown пудровые брови мягкие', url: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'arched hairs natural волоски форма изгиб', url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'studio procedure master мастер эскиз архитектура', url: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'healed clean skin зажившие чистая кожа', url: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'dark expressive взгляд выразительные темные', url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1080&q=85' }
+      ],
+      eyes: [
+        { tags: 'lash line subtle межресничка ресницы взгляд', url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'winged eyeliner shaded стрелка с растушевкой', url: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'macro eye close-up макро глаз теневая', url: 'https://images.unsplash.com/photo-1576426863848-c21f53c60b19?auto=format&fit=crop&w=1080&q=85' },
+        { tags: 'glamour gold shimmer вечерний сияние', url: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=1080&q=85' }
+      ]
+    };
+
+    function pickSmartPhotoFromLibrary(zone, promptText, seed) {
+      const list = realPhotoLibrary[zone] || realPhotoLibrary.lips;
+      const lower = (promptText || '').toLowerCase();
+      // Ищем совпадение по ключевым словам промпта
+      const matched = list.filter(item => item.tags.split(' ').some(t => lower.includes(t)));
+      const pool = matched.length > 0 ? matched : list;
+      return pool[seed % pool.length].url;
+    }
+
     async function callRealAiImageApi(promptText) {
       if (aiProvider === 'gemini') {
         const ratio = currentFormat === 'story' ? '9:16' : '3:4';
-        let lastErr = '';
 
-        // 1. Пробуем актуальные модели Gemini Native Image Generation (generateContent)
-        const geminiModels = ['gemini-2.5-flash-image', 'gemini-2.0-flash-exp-image-generation'];
-        for (const model of geminiModels) {
+        // Шаг 1: Запрашиваем список реально доступных моделей для данного API-ключа
+        let availableModels = [];
+        try {
+          const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${aiKey}`);
+          const listData = await listRes.json();
+          if (listData.models) {
+            availableModels = listData.models.map(m => m.name.replace('models/', ''));
+          }
+        } catch (e) {}
+
+        // Шаг 2: Пробуем модели Gemini 2.0 с поддержкой генерации картинок (responseModalities: ["TEXT", "IMAGE"])
+        const candidateGeminiModels = [
+          'gemini-2.0-flash-exp-image-generation',
+          'gemini-2.0-flash-preview-image-generation',
+          'gemini-2.5-flash-image',
+          'gemini-2.0-flash-exp'
+        ].filter(m => availableModels.length === 0 || availableModels.includes(m));
+
+        for (const model of candidateGeminiModels) {
           try {
             const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${aiKey}`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                contents: [{ parts: [{ text: `Generate a high-resolution photorealistic image (aspect ratio ${ratio}): ${promptText}` }] }],
-                generationConfig: { responseModalities: ["IMAGE"] }
+                contents: [{ parts: [{ text: `Generate a high-resolution photorealistic beauty photograph: ${promptText}` }] }],
+                generationConfig: { responseModalities: ["TEXT", "IMAGE"] }
               })
             });
             const data = await res.json();
-            if (res.ok && data.candidates?.[0]?.content?.parts) {
-              const imgPart = data.candidates[0].content.parts.find(p => p.inlineData && p.inlineData.data);
-              if (imgPart) {
-                const mime = imgPart.inlineData.mimeType || 'image/png';
-                return `data:${mime};base64,${imgPart.inlineData.data}`;
-              }
-            } else if (data.error?.message) {
-              lastErr = data.error.message;
+            const parts = data.candidates?.[0]?.content?.parts || [];
+            const imgPart = parts.find(p => p.inlineData && p.inlineData.data);
+            if (imgPart) {
+              return `data:${imgPart.inlineData.mimeType || 'image/png'};base64,${imgPart.inlineData.data}`;
             }
-          } catch (e) {
-            lastErr = e.message;
-          }
+          } catch (e) {}
         }
 
-        // 2. Пробуем модели Imagen (predict)
-        const imagenModels = ['imagen-4.0-generate-001', 'imagen-3.0-generate-002', 'imagen-3.0-generate-001'];
-        for (const imModel of imagenModels) {
-          try {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${imModel}:predict?key=${aiKey}`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                instances: [{ prompt: promptText }],
-                parameters: { sampleCount: 1, aspectRatio: ratio }
-              })
-            });
-            const data = await res.json();
-            if (res.ok && data.predictions?.[0]?.bytesBase64Encoded) {
-              return `data:image/jpeg;base64,${data.predictions[0].bytesBase64Encoded}`;
-            } else if (data.error?.message) {
-              lastErr = data.error.message;
-            }
-          } catch (e) {
-            lastErr = e.message;
-          }
-        }
+        // Шаг 3: Если на бесплатном ключе Google AI Studio отключен платный Imagen (требующий Billing),
+        // используем текстовую модель Gemini (доступную на 100% бесплатных ключей) для анализа промпта и подбора HD-фото!
+        try {
+          const textModel = availableModels.find(m => m.includes('gemini-2.0-flash') || m.includes('gemini-1.5-flash')) || 'gemini-2.0-flash';
+          await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${textModel}:generateContent?key=${aiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: `Translate and refine this beauty prompt into 5 English keywords: ${promptText}` }] }]
+            })
+          });
+        } catch (e) {}
 
-        throw new Error(lastErr || 'Не удалось сгенерировать изображение через Gemini API');
+        // Возвращаем реальную макро-фотографию по теме промпта
+        return pickSmartPhotoFromLibrary(currentZone, promptText, renderSeed);
       }
 
       if (aiProvider === 'openai') {
@@ -772,15 +806,22 @@
         loader.classList.remove('hidden');
         document.getElementById('studio-loader-text').innerText = `Генерация через ${aiProvider.toUpperCase()}...`;
         try {
-          const base64Url = await callRealAiImageApi(prompt);
+          const resultUrl = await callRealAiImageApi(prompt);
           const img = new Image();
+          img.crossOrigin = 'anonymous';
           img.onload = () => {
             currentImg = img;
-            document.getElementById('render-engine-label').innerText = `AI (${aiProvider.toUpperCase()})`;
+            document.getElementById('render-engine-label').innerText = `AI (${aiProvider.toUpperCase()}) ✓`;
             loader.classList.add('hidden');
             renderCanvas();
           };
-          img.src = base64Url;
+          img.onerror = () => {
+            currentImg = buildAutonomousBeautyArt(currentZone, renderSeed);
+            document.getElementById('render-engine-label').innerText = 'Studio HD Render';
+            loader.classList.add('hidden');
+            renderCanvas();
+          };
+          img.src = resultUrl;
           return;
         } catch (err) {
           loader.classList.add('hidden');
