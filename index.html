@@ -3,368 +3,379 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PMU Autopilot Studio — Контент-план, Карусели, Сторис и Автопостинг в Instagram</title>
+  <title>PMU Studio — Контент-план, Карусели, Сторис и Автопостинг в Instagram</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-    :root {
-      --bg-main: #0c0a0b;
-      --bg-card: rgba(24, 20, 23, 0.85);
-      --accent-rose: #f43f5e;
-      --accent-gold: #e5b869;
-    }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: radial-gradient(circle at top right, #23121a 0%, #0c0a0b 45%, #090809 100%);
-      color: #f4ecee;
-      min-height: 100vh;
+      background-color: #f8f7f9;
+      color: #18181b;
     }
     .font-editorial {
       font-family: 'Cormorant Garamond', serif;
     }
-    .glass {
-      background: var(--bg-card);
-      backdrop-filter: blur(18px);
-      border: 1px solid rgba(244, 114, 182, 0.16);
+    .card-white {
+      background: #ffffff;
+      border: 1px solid #ece8ec;
+      box-shadow: 0 4px 24px -6px rgba(24, 24, 27, 0.05);
     }
-    .nav-btn {
-      transition: all 0.2s ease;
+    .nav-item {
+      transition: all 0.18s ease;
     }
-    .nav-btn.active {
-      background: linear-gradient(135deg, rgba(225, 29, 72, 0.28), rgba(217, 119, 6, 0.22));
-      border-color: rgba(244, 114, 182, 0.55);
-      color: #ffe4e6;
-      box-shadow: 0 4px 20px -4px rgba(225, 29, 72, 0.35);
+    .nav-item.active {
+      background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+      color: #be123c;
+      border-color: #fecdd3;
+      font-weight: 600;
     }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-thumb { background: rgba(244, 114, 182, 0.3); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb { background: #e4e4e7; border-radius: 999px; }
   </style>
 </head>
-<body class="flex flex-col min-h-screen selection:bg-rose-500 selection:text-white">
+<body class="min-h-screen flex flex-col lg:flex-row selection:bg-rose-500 selection:text-white">
 
-  <!-- TOP NAVIGATION BAR -->
-  <header class="sticky top-0 z-50 glass border-b border-rose-500/15 px-4 md:px-8 py-3.5">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 via-pink-600 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-rose-900/40">
-          <i data-lucide="sparkles" class="w-5 h-5"></i>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-editorial text-2xl font-bold tracking-wide text-white">PMU Studio</span>
-            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30">Cloud Pro</span>
+  <!-- ==================== LEFT SIDEBAR MENU ==================== -->
+  <aside class="w-full lg:w-72 bg-white border-b lg:border-b-0 lg:border-r border-zinc-200/80 flex flex-col justify-between shrink-0 lg:sticky lg:top-0 lg:h-screen z-40">
+    <div>
+      <!-- Brand Header -->
+      <div class="p-5 md:p-6 border-b border-zinc-100 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center text-white shadow-md shadow-rose-200">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
           </div>
-          <p class="text-[11px] text-zinc-400 hidden sm:block">Перманентный макияж • Контент-план, Карусели, Сторис & Instagram API</p>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-editorial text-2xl font-bold tracking-tight text-zinc-900">PMU Studio</span>
+              <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-rose-50 text-rose-600 border border-rose-200">Pro</span>
+            </div>
+            <p class="text-[11px] text-zinc-500">Перманентный макияж</p>
+          </div>
         </div>
       </div>
 
-      <!-- Navigation Pages -->
-      <nav class="flex items-center gap-1.5 bg-zinc-950/80 p-1.5 rounded-2xl border border-zinc-800/90 overflow-x-auto max-w-full">
-        <button onclick="navigate('plan')" id="nav-plan" class="nav-btn active px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-transparent whitespace-nowrap">
-          <i data-lucide="calendar-heart" class="w-4 h-4 text-rose-400"></i> 1. Контент-план
+      <!-- Navigation Links -->
+      <nav class="p-4 flex lg:flex-col gap-1.5 overflow-x-auto">
+        <button onclick="navigate('plan')" id="nav-plan" class="nav-item active w-full px-3.5 py-2.5 rounded-xl text-xs text-left flex items-center gap-2.5 border border-transparent whitespace-nowrap">
+          <i data-lucide="calendar-heart" class="w-4 h-4 text-rose-500 shrink-0"></i>
+          <span>1. Контент-план (ИИ)</span>
         </button>
-        <button onclick="navigate('studio')" id="nav-studio" class="nav-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white flex items-center gap-1.5 border border-transparent whitespace-nowrap">
-          <i data-lucide="palette" class="w-4 h-4 text-pink-400"></i> 2. Студия и Карусели
+        <button onclick="navigate('studio')" id="nav-studio" class="nav-item w-full px-3.5 py-2.5 rounded-xl text-xs font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 text-left flex items-center gap-2.5 border border-transparent whitespace-nowrap">
+          <i data-lucide="palette" class="w-4 h-4 text-pink-500 shrink-0"></i>
+          <span>2. Студия и Карусели</span>
         </button>
-        <button onclick="navigate('instagram')" id="nav-instagram" class="nav-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white flex items-center gap-1.5 border border-transparent whitespace-nowrap">
-          <i data-lucide="instagram" class="w-4 h-4 text-amber-400"></i> 3. Instagram Автопостинг
+        <button onclick="navigate('instagram')" id="nav-instagram" class="nav-item w-full px-3.5 py-2.5 rounded-xl text-xs font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 text-left flex items-center gap-2.5 border border-transparent whitespace-nowrap">
+          <i data-lucide="instagram" class="w-4 h-4 text-amber-500 shrink-0"></i>
+          <span>3. Instagram Автопостинг</span>
         </button>
-        <button onclick="navigate('deploy')" id="nav-deploy" class="nav-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white flex items-center gap-1.5 border border-transparent whitespace-nowrap">
-          <i data-lucide="globe" class="w-4 h-4 text-emerald-400"></i> 4. Google Sites и Ключи ИИ
+        <button onclick="navigate('deploy')" id="nav-deploy" class="nav-item w-full px-3.5 py-2.5 rounded-xl text-xs font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 text-left flex items-center gap-2.5 border border-transparent whitespace-nowrap">
+          <i data-lucide="settings" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+          <span>4. Ключи ИИ и Google Sites</span>
         </button>
       </nav>
     </div>
-  </header>
 
-  <!-- MAIN CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-8">
+    <!-- Sidebar Status Footer -->
+    <div class="hidden lg:block p-4 m-4 rounded-2xl bg-zinc-50 border border-zinc-200/70 space-y-2.5">
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-zinc-500">Движок ИИ:</span>
+        <span id="sidebar-ai-status" class="font-semibold text-amber-600">Не задан</span>
+      </div>
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-zinc-500">Instagram:</span>
+        <span id="sidebar-ig-status" class="font-semibold text-zinc-500">Ожидание</span>
+      </div>
+      <button onclick="navigate('deploy')" class="w-full py-2 rounded-xl bg-white border border-zinc-200 hover:border-rose-300 text-zinc-700 text-[11px] font-semibold transition">
+        Настроить подключения
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN WORKSPACE ==================== -->
+  <main class="flex-1 p-4 md:p-8 max-w-6xl w-full mx-auto">
 
     <!-- =====================================================================
-         PAGE 1: CONTENT PLAN GENERATOR WITH EDITABLE IMAGE PROMPTS
+         PAGE 1: CONTENT PLAN WITH PROMPT BLOCK FOR GENERATION
     ====================================================================== -->
     <section id="page-plan" class="space-y-6">
-      <div class="glass rounded-3xl p-6 md:p-8">
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-zinc-800/80 pb-6 mb-6">
+      <div class="card-white rounded-3xl p-6 md:p-8 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-100 pb-5">
           <div>
-            <span class="text-xs font-semibold uppercase tracking-widest text-rose-400">Шаг 1 • Стратегия и прогревы</span>
-            <h2 class="font-editorial text-3xl font-bold text-white mt-1">Умный контент-план для мастера ПМ</h2>
-            <p class="text-xs text-zinc-400 mt-1">Генерируйте темы под нужную процедуру, редактируйте промпты для фото и в 1 клик создавайте готовые посты, сторис и карусели.</p>
+            <span class="text-[11px] font-bold uppercase tracking-widest text-rose-500">Стратегия и прогревы</span>
+            <h1 class="font-editorial text-3xl font-bold text-zinc-900 mt-0.5">Генератор контент-плана для мастера ПМ</h1>
+            <p class="text-xs text-zinc-500 mt-1">Задайте задачу в поле промпта ниже, чтобы ИИ составил индивидуальный контент-план и промпты для фото к каждому посту.</p>
+          </div>
+        </div>
+
+        <!-- PROMPT BLOCK FOR GENERATING CONTENT PLAN -->
+        <div class="p-5 rounded-2xl bg-rose-50/50 border border-rose-200/80 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <label class="text-xs font-bold text-zinc-800 flex items-center gap-1.5">
+              <i data-lucide="sparkles" class="w-4 h-4 text-rose-500"></i>
+              Промпт для генерации контент-плана
+            </label>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="setPlanPreset('Составить контент-план на 6 постов для мастера перманентного макияжа: акварельные губы, пудровые брови, закрытие страхов боли и синевы, свободные окошки.')" class="px-2.5 py-1 rounded-lg bg-white border border-zinc-200 hover:border-rose-300 text-[11px] text-zinc-600 transition">Микс 14 дней</button>
+              <button onclick="setPlanPreset('Прогрев на акварельные и помадные губы: зажившие работы через 30 дней, отсутствие отека, подбор нюдового оттенка, запись на процедуру.')" class="px-2.5 py-1 rounded-lg bg-white border border-zinc-200 hover:border-rose-300 text-[11px] text-zinc-600 transition">Акцент: Губы</button>
+              <button onclick="setPlanPreset('Прогрев на пудровые брови и перекрытие старого серого татуажа без лазера. Разбор заживления по дням и ответы на возражения.')" class="px-2.5 py-1 rounded-lg bg-white border border-zinc-200 hover:border-rose-300 text-[11px] text-zinc-600 transition">Акцент: Брови</button>
+              <button onclick="setPlanPreset('Контент-план на межресничку и мягкую стрелку с растушевкой: безопасность для глаз, эффект густых ресниц 24/7.')" class="px-2.5 py-1 rounded-lg bg-white border border-zinc-200 hover:border-rose-300 text-[11px] text-zinc-600 transition">Акцент: Веки</button>
+            </div>
           </div>
 
-          <div class="flex flex-wrap items-center gap-3">
-            <select id="plan-category" class="px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-700 text-xs text-white focus:outline-none focus:border-rose-500">
-              <option value="mix">Все зоны (Микс на 14 дней)</option>
-              <option value="lips">Акварельные и помадные губы</option>
-              <option value="brows">Пудровые брови и перекрытие</option>
-              <option value="eyes">Межресничка и стрелка с растушевкой</option>
-              <option value="fears">Закрытие страхов и возражений</option>
-            </select>
+          <textarea id="plan-master-prompt" rows="3" class="w-full p-3.5 bg-white border border-zinc-200 rounded-xl text-xs text-zinc-800 focus:outline-none focus:border-rose-500 leading-relaxed" placeholder="Опишите, какой контент-план нужен: целевая аудитория, акцент на процедуру, акции, закрытие возражений...">Составить контент-план на 6 публикаций (посты 4:5, сторис 9:16 и карусели) для мастера перманентного макияжа: акварельные губы, пудровые брови, межресничка, закрытие страха боли и свободные окошки на неделю.</textarea>
 
-            <button onclick="generateContentPlan(true)" id="btn-gen-plan" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white text-xs font-semibold flex items-center gap-2 shadow-lg shadow-rose-900/40 transition">
-              <i data-lucide="sparkles" class="w-4 h-4"></i> Сгенерировать новый план
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+            <span class="text-[11px] text-zinc-500" id="plan-engine-note">Использует подключённый API-ключ Gemini/OpenAI или умный генератор ПМ</span>
+            <button onclick="generatePlanFromPrompt()" id="btn-generate-plan" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white text-xs font-semibold flex items-center gap-2 shadow-md shadow-rose-200 transition">
+              <i data-lucide="wand-2" class="w-4 h-4"></i> Сгенерировать контент-план
             </button>
           </div>
         </div>
 
+        <!-- Generated Cards Grid -->
         <div id="plan-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <!-- Cards rendered via JS -->
+          <!-- Cards populated via JS -->
         </div>
       </div>
     </section>
 
     <!-- =====================================================================
-         PAGE 2: VISUAL STUDIO (POSTS 4:5, STORIES 9:16, CAROUSELS)
+         PAGE 2: STUDIO (CLEAN CANVAS WITHOUT PRE-GENERATED FAKE IMAGES)
     ====================================================================== -->
     <section id="page-studio" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
       
-      <!-- Left Settings Panel -->
+      <!-- Left Controls -->
       <div class="lg:col-span-5 space-y-5">
-        <div class="glass rounded-3xl p-6 space-y-4">
-          <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-            <h2 class="text-base font-bold text-white flex items-center gap-2">
-              <i data-lucide="sliders-horizontal" class="w-4 h-4 text-rose-400"></i> Конструктор макета
+        <div class="card-white rounded-3xl p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-zinc-100 pb-3">
+            <h2 class="text-base font-bold text-zinc-900 flex items-center gap-2">
+              <i data-lucide="sliders-horizontal" class="w-4 h-4 text-rose-500"></i> Настройка макета
             </h2>
-            <button onclick="navigate('deploy')" id="studio-ai-badge" class="text-[11px] px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition">
-              ⚙️ Настроить ключ ИИ
+            <button onclick="clearCanvasPhoto()" class="text-[11px] text-zinc-500 hover:text-rose-600 flex items-center gap-1 transition" title="Очистить картинку">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Очистить фото
             </button>
           </div>
 
-          <!-- Format Selector: Post / Story / Carousel -->
+          <!-- Format Selector -->
           <div>
-            <label class="block text-[11px] font-semibold uppercase tracking-wider text-zinc-400 mb-2">Формат публикации</label>
+            <label class="block text-[11px] font-semibold uppercase tracking-wider text-zinc-500 mb-2">Формат публикации</label>
             <div class="grid grid-cols-3 gap-2">
-              <button onclick="setStudioFormat('post')" id="fmt-post" class="fmt-btn py-2.5 px-2 rounded-xl border border-rose-500/60 bg-rose-500/15 text-rose-200 text-xs font-semibold text-center">
+              <button onclick="setStudioFormat('post')" id="fmt-post" class="fmt-btn py-2.5 px-2 rounded-xl border border-rose-300 bg-rose-50 text-rose-700 text-xs font-semibold text-center">
                 🖼 Пост 4:5
               </button>
-              <button onclick="setStudioFormat('story')" id="fmt-story" class="fmt-btn py-2.5 px-2 rounded-xl border border-zinc-800 bg-zinc-950/70 text-zinc-400 text-xs font-semibold text-center hover:text-white">
+              <button onclick="setStudioFormat('story')" id="fmt-story" class="fmt-btn py-2.5 px-2 rounded-xl border border-zinc-200 bg-white text-zinc-600 text-xs font-semibold text-center hover:bg-zinc-50">
                 📱 Сторис 9:16
               </button>
-              <button onclick="setStudioFormat('carousel')" id="fmt-carousel" class="fmt-btn py-2.5 px-2 rounded-xl border border-zinc-800 bg-zinc-950/70 text-zinc-400 text-xs font-semibold text-center hover:text-white">
+              <button onclick="setStudioFormat('carousel')" id="fmt-carousel" class="fmt-btn py-2.5 px-2 rounded-xl border border-zinc-200 bg-white text-zinc-600 text-xs font-semibold text-center hover:bg-zinc-50">
                 📑 Карусель
               </button>
             </div>
           </div>
 
-          <!-- Carousel Slide Switcher (Visible only when Carousel is active) -->
-          <div id="carousel-controls" class="hidden p-3 rounded-2xl bg-zinc-950/90 border border-rose-500/30 space-y-2">
+          <!-- Carousel Slide Switcher -->
+          <div id="carousel-controls" class="hidden p-3 rounded-2xl bg-zinc-50 border border-zinc-200 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-semibold text-rose-300">Слайды карусели (4:5)</span>
-              <span class="text-[11px] text-zinc-400" id="slide-indicator">Слайд 1 из 3</span>
+              <span class="text-xs font-semibold text-zinc-800">Слайды карусели (4:5)</span>
+              <span class="text-[11px] text-zinc-500" id="slide-indicator">Слайд 1 из 3</span>
             </div>
             <div class="flex items-center gap-1.5">
               <button onclick="selectSlide(0)" id="slide-btn-0" class="slide-btn flex-1 py-1.5 rounded-lg bg-rose-600 text-white text-xs font-bold">1. Обложка</button>
-              <button onclick="selectSlide(1)" id="slide-btn-1" class="slide-btn flex-1 py-1.5 rounded-lg bg-zinc-900 text-zinc-400 text-xs font-semibold">2. Суть</button>
-              <button onclick="selectSlide(2)" id="slide-btn-2" class="slide-btn flex-1 py-1.5 rounded-lg bg-zinc-900 text-zinc-400 text-xs font-semibold">3. Запись</button>
+              <button onclick="selectSlide(1)" id="slide-btn-1" class="slide-btn flex-1 py-1.5 rounded-lg bg-white border border-zinc-200 text-zinc-600 text-xs font-semibold">2. Суть</button>
+              <button onclick="selectSlide(2)" id="slide-btn-2" class="slide-btn flex-1 py-1.5 rounded-lg bg-white border border-zinc-200 text-zinc-600 text-xs font-semibold">3. Запись</button>
             </div>
           </div>
 
-          <!-- Zone Selector -->
-          <div>
-            <label class="block text-[11px] font-semibold uppercase tracking-wider text-zinc-400 mb-2">Зона перманентного макияжа</label>
-            <div class="grid grid-cols-3 gap-2">
-              <button onclick="setZone('lips')" id="zone-lips" class="zone-btn py-2 rounded-xl border border-rose-500/50 bg-rose-950/30 text-rose-200 text-xs font-medium">💋 Губы</button>
-              <button onclick="setZone('brows')" id="zone-brows" class="zone-btn py-2 rounded-xl border border-zinc-800 bg-zinc-950/60 text-zinc-400 text-xs font-medium">✨ Брови</button>
-              <button onclick="setZone('eyes')" id="zone-eyes" class="zone-btn py-2 rounded-xl border border-zinc-800 bg-zinc-950/60 text-zinc-400 text-xs font-medium">👁 Веки</button>
-            </div>
-          </div>
-
-          <!-- Editable Prompt for Photo -->
-          <div class="p-3.5 rounded-2xl bg-zinc-950/90 border border-zinc-800 space-y-2">
+          <!-- Prompt for Photo Generation -->
+          <div class="p-3.5 rounded-2xl bg-zinc-50 border border-zinc-200/80 space-y-2">
             <div class="flex items-center justify-between">
-              <label class="text-[11px] font-semibold uppercase tracking-wider text-rose-300 flex items-center gap-1.5">
+              <label class="text-[11px] font-bold uppercase tracking-wider text-rose-600 flex items-center gap-1.5">
                 <i data-lucide="wand-2" class="w-3.5 h-3.5"></i> Промпт для генерации фото
               </label>
-              <span class="text-[10px] text-zinc-500">Редактируемый</span>
+              <span class="text-[10px] text-zinc-400">Ручная редакция</span>
             </div>
-            <textarea id="studio-prompt" rows="2" class="w-full p-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-zinc-200 focus:outline-none focus:border-rose-500 leading-relaxed">Macro beauty photography of natural healed velvet nude lips permanent makeup, soft studio lighting, clean skin texture</textarea>
+            <textarea id="studio-prompt" rows="3" class="w-full p-2.5 bg-white border border-zinc-200 rounded-xl text-xs text-zinc-800 focus:outline-none focus:border-rose-500 leading-relaxed">Macro beauty photography of natural healed velvet nude lips permanent makeup, soft studio lighting, clean skin texture</textarea>
             <div class="flex gap-2">
-              <button onclick="generateVisualPhoto()" class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-rose-600 to-amber-500 hover:opacity-95 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-md transition">
+              <button onclick="generateVisualPhoto()" class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:opacity-95 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm transition">
                 <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Сгенерировать фото
               </button>
               <input type="file" id="upload-photo-input" accept="image/*" class="hidden" onchange="handleUserPhoto(event)" />
-              <button onclick="document.getElementById('upload-photo-input').click()" class="py-2.5 px-3 rounded-xl bg-zinc-900 border border-zinc-700 hover:border-rose-500/50 text-zinc-300 text-xs font-medium flex items-center gap-1.5 transition" title="Загрузить своё фото">
+              <button onclick="document.getElementById('upload-photo-input').click()" class="py-2.5 px-3 rounded-xl bg-white border border-zinc-300 hover:border-rose-400 text-zinc-700 text-xs font-semibold flex items-center gap-1.5 transition" title="Загрузить своё фото">
                 <i data-lucide="upload" class="w-3.5 h-3.5"></i> Своё
               </button>
             </div>
           </div>
 
-          <!-- Text Fields -->
+          <!-- Overlay Texts -->
           <div class="space-y-2.5">
             <div>
-              <label class="block text-[11px] text-zinc-400 mb-1">Бейдж сверху</label>
-              <input type="text" id="studio-badge" value="Заживший результат • 30 дней" oninput="syncSlideData()" class="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-rose-500" />
+              <label class="block text-[11px] font-medium text-zinc-500 mb-1">Верхний бейдж</label>
+              <input type="text" id="studio-badge" value="Заживший результат • 30 дней" oninput="syncSlideData()" class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-xl text-xs text-zinc-900 focus:outline-none focus:border-rose-500" />
             </div>
             <div>
-              <label class="block text-[11px] text-zinc-400 mb-1">Заголовок на картинке (Хук)</label>
-              <input type="text" id="studio-title" value="Зажившие губы: натуральный нюд без контура" oninput="syncSlideData()" class="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-rose-500" />
+              <label class="block text-[11px] font-medium text-zinc-500 mb-1">Главный заголовок (Хук)</label>
+              <input type="text" id="studio-title" value="Зажившие губы: натуральный нюд без контура" oninput="syncSlideData()" class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-xl text-xs text-zinc-900 focus:outline-none focus:border-rose-500" />
             </div>
             <div>
-              <label class="block text-[11px] text-zinc-400 mb-1">Подзаголовок / Описание</label>
-              <input type="text" id="studio-subtitle" value="Срок носки 1.5–2 года. Сразу после процедуры нет отека" oninput="syncSlideData()" class="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white focus:outline-none focus:border-rose-500" />
+              <label class="block text-[11px] font-medium text-zinc-500 mb-1">Подзаголовок / Описание</label>
+              <input type="text" id="studio-subtitle" value="Срок носки 1.5–2 года. Сразу после процедуры нет отека" oninput="syncSlideData()" class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-xl text-xs text-zinc-900 focus:outline-none focus:border-rose-500" />
             </div>
           </div>
         </div>
       </div>
 
       <!-- Right Preview Canvas -->
-      <div class="lg:col-span-7 glass rounded-3xl p-6 flex flex-col items-center justify-between">
+      <div class="lg:col-span-7 card-white rounded-3xl p-6 flex flex-col items-center justify-between">
         <div class="w-full flex flex-wrap items-center justify-between gap-2 mb-4">
           <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-            <span class="text-xs font-semibold uppercase tracking-wider text-zinc-300">Предпросмотр макета</span>
-            <span id="render-engine-label" class="text-[11px] px-2 py-0.5 rounded bg-zinc-900 text-rose-300 border border-rose-500/30">PMU Studio Render</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+            <span class="text-xs font-bold uppercase tracking-wider text-zinc-700">Предпросмотр макета</span>
+            <span id="render-engine-label" class="text-[11px] px-2.5 py-0.5 rounded-full bg-zinc-100 text-zinc-600 border border-zinc-200">Холст очищен (готово к генерации)</span>
           </div>
           <div class="flex items-center gap-2">
-            <button onclick="downloadCurrentPng()" class="px-3.5 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-white text-xs font-semibold flex items-center gap-1.5 transition">
-              <i data-lucide="download" class="w-3.5 h-3.5 text-rose-400"></i> Скачать PNG
+            <button onclick="downloadCurrentPng()" class="px-3.5 py-2 rounded-xl bg-white hover:bg-zinc-50 border border-zinc-300 text-zinc-800 text-xs font-semibold flex items-center gap-1.5 transition">
+              <i data-lucide="download" class="w-3.5 h-3.5 text-rose-500"></i> Скачать PNG
             </button>
-            <button onclick="sendToInstagramQueue()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:opacity-95 text-white text-xs font-semibold flex items-center gap-1.5 shadow-lg shadow-rose-900/40 transition">
+            <button onclick="sendToInstagramQueue()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:opacity-95 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition">
               <i data-lucide="send" class="w-3.5 h-3.5"></i> В автопостинг
             </button>
           </div>
         </div>
 
-        <!-- Canvas Wrapper -->
-        <div class="relative rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl bg-zinc-950 flex items-center justify-center">
+        <!-- Canvas Container -->
+        <div class="relative rounded-2xl overflow-hidden border border-zinc-200 shadow-lg bg-zinc-100 flex items-center justify-center">
           <canvas id="studio-canvas" class="max-h-[530px] w-auto object-contain"></canvas>
-          <div id="studio-loader" class="hidden absolute inset-0 bg-black/80 backdrop-blur-sm flex-col items-center justify-center gap-3 p-6 text-center">
+          <div id="studio-loader" class="hidden absolute inset-0 bg-white/85 backdrop-blur-sm flex-col items-center justify-center gap-3 p-6 text-center">
             <div class="w-10 h-10 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="text-xs text-rose-200 font-medium" id="studio-loader-text">Генерация изображения...</p>
+            <p class="text-xs text-zinc-800 font-semibold" id="studio-loader-text">Генерация изображения...</p>
           </div>
         </div>
 
-        <div id="studio-alert" class="hidden w-full mt-3 p-3 rounded-xl bg-red-950/70 border border-red-500/40 text-xs text-red-200 flex items-center justify-between">
+        <div id="studio-alert" class="hidden w-full mt-3 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center justify-between gap-2">
           <span id="studio-alert-text">Ошибка</span>
-          <button onclick="navigate('deploy')" class="underline font-semibold text-white">Настроить ИИ</button>
+          <button onclick="navigate('deploy')" class="underline font-bold text-rose-900 shrink-0">Проверить ключ ИИ</button>
         </div>
 
-        <div class="w-full mt-4 pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs text-zinc-400">
-          <span>Разрешение: <strong id="canvas-dim-label" class="text-zinc-200">1080 × 1350 px (4:5)</strong></span>
-          <span>Бренд: <strong class="text-rose-300" id="brand-footer-label">PMU ART STUDIO</strong></span>
+        <div class="w-full mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-500">
+          <span>Разрешение: <strong id="canvas-dim-label" class="text-zinc-800">1080 × 1350 px (4:5)</strong></span>
+          <span>Бренд: <strong class="text-rose-600" id="brand-footer-label">PMU ART STUDIO</strong></span>
         </div>
       </div>
     </section>
 
     <!-- =====================================================================
-         PAGE 3: INSTAGRAM AUTOPOSTING & GRAPH API
+         PAGE 3: INSTAGRAM AUTOPOSTING
     ====================================================================== -->
     <section id="page-instagram" class="hidden space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        <!-- Instagram Graph API Connection -->
-        <div class="lg:col-span-5 glass rounded-3xl p-6 space-y-4">
-          <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-            <h2 class="text-base font-bold text-white flex items-center gap-2">
-              <i data-lucide="instagram" class="w-5 h-5 text-pink-500"></i> Привязка Instagram Business
+        <div class="lg:col-span-5 card-white rounded-3xl p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-zinc-100 pb-3">
+            <h2 class="text-base font-bold text-zinc-900 flex items-center gap-2">
+              <i data-lucide="instagram" class="w-5 h-5 text-pink-600"></i> Привязка Instagram Business
             </h2>
-            <span id="ig-conn-status" class="text-[11px] px-2.5 py-0.5 rounded-full bg-zinc-800 text-zinc-400">Не подключено</span>
+            <span id="ig-conn-status" class="text-[11px] px-2.5 py-0.5 rounded-full bg-zinc-100 text-zinc-500">Не подключено</span>
           </div>
 
-          <p class="text-xs text-zinc-400 leading-relaxed">
-            Для прямой публикации постов и сторис через официальный <strong>Instagram Graph API</strong> укажите ID бизнес-аккаунта и токен доступа (Meta for Developers).
+          <p class="text-xs text-zinc-500 leading-relaxed">
+            Укажите ID бизнес-аккаунта Instagram и токен доступа Graph API для прямой автопубликации постов, каруселей и сторис.
           </p>
 
           <div class="space-y-3">
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">Название студии (на макетах)</label>
-              <input type="text" id="ig-studio-name" value="PMU ART STUDIO" oninput="saveIgSettings()" class="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white" />
+              <label class="block text-xs font-medium text-zinc-600 mb-1">Название студии (на макетах)</label>
+              <input type="text" id="ig-studio-name" value="PMU ART STUDIO" oninput="saveIgSettings()" class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-xl text-xs text-zinc-900" />
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">Instagram Business Account ID</label>
-              <input type="text" id="ig-user-id" placeholder="Например: 17841405822304914" class="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white" />
+              <label class="block text-xs font-medium text-zinc-600 mb-1">Instagram Business Account ID</label>
+              <input type="text" id="ig-user-id" placeholder="Например: 17841405822304914" class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-xl text-xs text-zinc-900" />
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">Graph API Access Token (EAAB...)</label>
-              <input type="password" id="ig-access-token" placeholder="Вставьте долгосрочный токен Instagram..." class="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white" />
+              <label class="block text-xs font-medium text-zinc-600 mb-1">Graph API Access Token (EAAB...)</label>
+              <input type="password" id="ig-access-token" placeholder="Вставьте долгосрочный токен Instagram..." class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-xl text-xs text-zinc-900" />
             </div>
             <div>
-              <label class="block text-xs text-zinc-400 mb-1">Авто-хэштеги (первый комментарий)</label>
-              <input type="text" id="ig-hashtags" value="#перманентныймакияж #пудровыеброви #акварельныегубы #межресничка #татуаж" class="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-zinc-300" />
+              <label class="block text-xs font-medium text-zinc-600 mb-1">Авто-хэштеги (первый комментарий)</label>
+              <input type="text" id="ig-hashtags" value="#перманентныймакияж #пудровыеброви #акварельныегубы #межресничка #татуаж" class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-xl text-xs text-zinc-700" />
             </div>
-            <button onclick="saveIgSettings()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-amber-500 text-white text-xs font-semibold shadow-lg transition">
+            <button onclick="saveIgSettings()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 text-white text-xs font-semibold shadow-sm transition">
               Сохранить привязку Instagram
             </button>
           </div>
         </div>
 
-        <!-- Scheduled Queue & Live Publish -->
-        <div class="lg:col-span-7 glass rounded-3xl p-6 space-y-4">
-          <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+        <div class="lg:col-span-7 card-white rounded-3xl p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-zinc-100 pb-3">
             <div>
-              <h2 class="text-base font-bold text-white">Очередь автопубликаций</h2>
-              <p class="text-xs text-zinc-400">Готовые макеты из студии с текстами и хэштегами</p>
+              <h2 class="text-base font-bold text-zinc-900">Очередь автопубликаций</h2>
+              <p class="text-xs text-zinc-500">Запланированные посты и сторис</p>
             </div>
-            <span class="text-xs text-emerald-400 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Автопилот 24/7
+            <span class="text-xs text-emerald-600 font-semibold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Автопилот 24/7
             </span>
           </div>
-
-          <div id="ig-queue-list" class="space-y-3">
-            <!-- Queue items populated dynamically -->
-          </div>
+          <div id="ig-queue-list" class="space-y-3"></div>
         </div>
       </div>
     </section>
 
     <!-- =====================================================================
-         PAGE 4: GOOGLE SITES AUTO-DEPLOY & AI API KEYS
+         PAGE 4: AI SETTINGS & GOOGLE SITES DEPLOY
     ====================================================================== -->
     <section id="page-deploy" class="hidden space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
-        <!-- Left: AI Image Generator Keys -->
-        <div class="glass rounded-3xl p-6 space-y-4">
-          <div class="border-b border-zinc-800 pb-3">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400">Настройка нейросети</span>
-            <h2 class="text-lg font-bold text-white mt-0.5">Подключение генерации фото (AI)</h2>
-            <p class="text-xs text-zinc-400 mt-1">Вставьте свой API-ключ, чтобы нейросеть генерировала фотореалистичные макро-кадры по вашим промптам.</p>
+        <!-- AI Provider Keys -->
+        <div class="card-white rounded-3xl p-6 space-y-4">
+          <div class="border-b border-zinc-100 pb-3">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-rose-500">Настройка нейросети</span>
+            <h2 class="text-lg font-bold text-zinc-900 mt-0.5">Ключи ИИ для контент-плана и фото</h2>
+            <p class="text-xs text-zinc-500 mt-1">Вставьте свой API-ключ. Для генерации фотореалистичных картинок рекомендуем OpenAI DALL-E 3 или Together FLUX (или Gemini с привязанным Billing).</p>
           </div>
 
           <div class="grid grid-cols-3 gap-2">
-            <button onclick="setAiProvider('gemini')" id="prov-btn-gemini" class="prov-btn p-2.5 rounded-xl border border-rose-500/60 bg-rose-500/15 text-xs font-bold text-white text-center">Gemini Imagen 3</button>
-            <button onclick="setAiProvider('openai')" id="prov-btn-openai" class="prov-btn p-2.5 rounded-xl border border-zinc-800 bg-zinc-950 text-xs font-semibold text-zinc-400 text-center">OpenAI DALL-E 3</button>
-            <button onclick="setAiProvider('together')" id="prov-btn-together" class="prov-btn p-2.5 rounded-xl border border-zinc-800 bg-zinc-950 text-xs font-semibold text-zinc-400 text-center">Together FLUX</button>
+            <button onclick="setAiProvider('openai')" id="prov-btn-openai" class="prov-btn p-2.5 rounded-xl border border-rose-300 bg-rose-50 text-xs font-bold text-rose-700 text-center">OpenAI (DALL-E 3)</button>
+            <button onclick="setAiProvider('together')" id="prov-btn-together" class="prov-btn p-2.5 rounded-xl border border-zinc-200 bg-white text-xs font-semibold text-zinc-600 text-center">Together (FLUX.1)</button>
+            <button onclick="setAiProvider('gemini')" id="prov-btn-gemini" class="prov-btn p-2.5 rounded-xl border border-zinc-200 bg-white text-xs font-semibold text-zinc-600 text-center">Google Gemini</button>
           </div>
 
           <div>
-            <label class="block text-xs text-zinc-400 mb-1" id="ai-key-label">API-ключ Google Gemini (AIzaSy...)</label>
-            <input type="password" id="ai-key-field" placeholder="Вставьте ключ сюда..." class="w-full px-3.5 py-2.5 bg-zinc-950 border border-zinc-700 rounded-xl text-xs text-white" />
-            <p class="text-[11px] text-zinc-400 mt-1" id="ai-key-link">
-              Получить бесплатный ключ: <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-rose-400 underline">Google AI Studio</a>
+            <label class="block text-xs font-medium text-zinc-600 mb-1" id="ai-key-label">API-ключ OpenAI (sk-...)</label>
+            <input type="password" id="ai-key-field" placeholder="Вставьте ключ сюда..." class="w-full px-3.5 py-2.5 bg-white border border-zinc-300 rounded-xl text-xs text-zinc-900" />
+            <p class="text-[11px] text-zinc-500 mt-1" id="ai-key-link">
+              Получить ключ: <a href="https://platform.openai.com/api-keys" target="_blank" class="text-rose-600 underline">OpenAI Platform</a>
             </p>
           </div>
 
           <div class="flex items-center gap-2">
             <button onclick="saveAiKey()" class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold transition">Сохранить ключ ИИ</button>
-            <span id="ai-key-saved-msg" class="hidden text-xs text-emerald-400">✓ Сохранено!</span>
+            <span id="ai-key-saved-msg" class="hidden text-xs text-emerald-600 font-semibold">✓ Сохранено!</span>
           </div>
         </div>
 
-        <!-- Right: One-Click Google Sites Auto-Deploy -->
-        <div class="glass rounded-3xl p-6 space-y-4">
-          <div class="border-b border-zinc-800 pb-3">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Авто-выгрузка на Google Sites</span>
-            <h2 class="text-lg font-bold text-white mt-0.5">Публикация на sites.google.com</h2>
-            <p class="text-xs text-zinc-400 mt-1">Скопируйте актуальный код всей студии в 1 клик для вставки в блок <strong>«Встроить код»</strong> на Google Сайтах или используйте скрипт авто-деплоя.</p>
+        <!-- Google Sites Deploy -->
+        <div class="card-white rounded-3xl p-6 space-y-4">
+          <div class="border-b border-zinc-100 pb-3">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-600">Публикация</span>
+            <h2 class="text-lg font-bold text-zinc-900 mt-0.5">Выгрузка на Google Sites</h2>
+            <p class="text-xs text-zinc-500 mt-1">Скопируйте код сайта в 1 клик и вставьте в блок <strong>«Встроить код»</strong> на Google Сайтах.</p>
           </div>
 
-          <div class="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-3">
+          <div class="p-4 rounded-2xl bg-zinc-50 border border-zinc-200 space-y-3">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-semibold text-white">1. Мгновенная вставка в Google Sites</span>
+              <span class="text-xs font-bold text-zinc-800">1. Вставка в Google Sites</span>
               <button onclick="copyFullSiteCode()" id="btn-copy-code" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-1.5 transition">
                 <i data-lucide="copy" class="w-3.5 h-3.5"></i> Скопировать код сайта
               </button>
             </div>
-            <p class="text-[11px] text-zinc-400 leading-relaxed">
-              Откройте <a href="https://sites.google.com/new" target="_blank" class="text-emerald-400 underline">sites.google.com/new</a> ➔ справа выберите <strong>Встроить (Embed)</strong> ➔ вкладка <strong>Встроить код</strong> ➔ нажмите <strong>Ctrl+V</strong> ➔ <strong>Опубликовать</strong>.
+            <p class="text-[11px] text-zinc-600 leading-relaxed">
+              Откройте <a href="https://sites.google.com/new" target="_blank" class="text-emerald-600 font-semibold underline">sites.google.com/new</a> ➔ выберите <strong>Встроить (Embed)</strong> ➔ вкладка <strong>Встроить код</strong> ➔ <strong>Ctrl+V</strong> ➔ <strong>Опубликовать</strong>.
             </p>
           </div>
 
-          <div class="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-2">
-            <span class="text-xs font-semibold text-white block">2. Полностью автоматическая загрузка (Node.js скрипт)</span>
-            <p class="text-[11px] text-zinc-400 leading-relaxed">
-              В скачанном архиве проекта находится файл <code class="text-rose-300">auto_deploy_google_sites.js</code>. Запустите <code class="text-emerald-300">node auto_deploy_google_sites.js</code> — робот сам откроет Google Sites, создаст страницу, вставит этот сайт и нажмёт «Опубликовать».
+          <div class="p-4 rounded-2xl bg-zinc-50 border border-zinc-200 space-y-1.5">
+            <span class="text-xs font-bold text-zinc-800 block">2. Авто-деплой скриптом</span>
+            <p class="text-[11px] text-zinc-600 leading-relaxed">
+              Используйте <code class="text-rose-600 font-mono">node auto_deploy_google_sites.js</code> из архива проекта для автоматического открытия браузера и публикации страницы на Google Sites.
             </p>
           </div>
         </div>
@@ -375,77 +386,17 @@
 
   <script>
     // ==================== STATE ====================
-    let currentFormat = 'post'; // 'post' | 'story' | 'carousel'
+    let currentFormat = 'post';
     let currentSlideIdx = 0;
-    let currentZone = 'lips';
-    let currentImg = null;
-    let renderSeed = 42;
-    let planIteration = 0;
-
-    let aiProvider = localStorage.getItem('pmu_ai_prov') || 'gemini';
+    let currentImg = null; // Изначально null — сгенерированные/фейковые картинки удалены!
+    let aiProvider = localStorage.getItem('pmu_ai_prov') || 'openai';
     let aiKey = localStorage.getItem('pmu_ai_key') || '';
 
-    // Carousel 3-slide state
     let slidesData = [
       { badge: 'Заживший результат • 30 дней', title: 'Зажившие губы: натуральный нюд без контура', subtitle: 'Срок носки 1.5–2 года. Сразу после процедуры нет отека' },
       { badge: 'Слайд 2 • Без боли', title: 'Двухэтапная кремовая анестезия', subtitle: 'Процедура проходит комфортно: 90% клиенток засыпают во время сеанса' },
       { badge: 'Слайд 3 • Запись открыта', title: 'Подберём оттенок под ваш цветотип', subtitle: 'Напишите слово «ГУБЫ» в Директ и получите бесплатную консультацию' }
     ];
-
-    const defaultZonePrompts = {
-      lips: 'Macro beauty photography of natural healed velvet nude lips permanent makeup, soft studio lighting, clean skin texture',
-      brows: 'Close-up beauty portrait of soft powder eyebrows permanent makeup, natural hair strokes, warm aesthetic studio light',
-      eyes: 'Macro beauty shot of delicate shaded eyeliner and lash enhancement permanent makeup, expressive natural eye, clean skin'
-    };
-
-    const contentPlanDatabase = {
-      mix: [
-        [
-          { day: 'День 1', zone: 'brows', format: 'carousel', badge: 'Мифы и правда • Брови', title: '«А брови не посинеют через год?»', subtitle: 'Разбор минеральных пигментов и заживших работ через 1.5 года', prompt: 'Close-up beauty photography of healed soft powder brows, warm brown pigment, natural skin texture' },
-          { day: 'День 3', zone: 'lips', format: 'story', badge: 'Свободные окошки', title: 'Горящие окошки на этой неделе', subtitle: 'Успей записаться на акварельные губы: Пт 14:00, Сб 12:00', prompt: 'Aesthetic luxury beauty salon interior in rose gold and beige tones, soft morning sunlight' },
-          { day: 'День 5', zone: 'lips', format: 'post', badge: 'Без боли и отека', title: 'Больно ли делать акварельные губы?', subtitle: 'Двухэтапная аппликационная анестезия: клиентки спят на процедуре', prompt: 'Macro beauty shot of soft hydrated nude pink lips, gentle glossy finish, clean skin' },
-          { day: 'День 7', zone: 'brows', format: 'carousel', badge: 'Кейс • Перекрытие', title: 'Перекрытие старого серого татуажа', subtitle: 'Как мы вернули бровям теплый оттенок и воздушную форму без лазера', prompt: 'Aesthetic beauty portrait of natural arched eyebrows, soft shading technique, clean skin' },
-          { day: 'День 10', zone: 'eyes', format: 'story', badge: 'Интерактив • Опрос', title: 'Межресничка или стрелка с растушевкой?', subtitle: 'Выбирай свой идеальный вариант для выразительного взгляда 24/7', prompt: 'Close-up macro eye beauty shot with soft winged eyeliner shading, long lashes' },
-          { day: 'День 14', zone: 'brows', format: 'post', badge: 'Памятка клиента', title: 'Уход за бровями в первые 7 дней', subtitle: 'Почему нельзя сдирать шелушение и как сохранить 90% пигмента', prompt: 'Minimalist beauty flatlay with cotton pads and golden tweezers on marble background' }
-        ],
-        [
-          { day: 'День 1', zone: 'lips', format: 'post', badge: 'Заживший результат', title: 'Эффект зацелованных губ на 2 года', subtitle: 'Никакой помады по утрам — только естественный сочный оттенок', prompt: 'Macro beauty photography of natural berry-nude lips permanent makeup, silky skin texture' },
-          { day: 'День 2', zone: 'eyes', format: 'post', badge: 'Секрет взгляда', title: 'Межресничка: эффект густых ресниц', subtitle: 'Подходит абсолютно всем и визуально омолаживает взгляд', prompt: 'Extreme close-up beauty portrait of woman eye with subtle lash line enhancement, warm light' },
-          { day: 'День 4', zone: 'brows', format: 'story', badge: 'Разбор эскиза', title: 'Как мы подбираем форму бровей?', subtitle: 'Строим симметрию по анатомическим точкам лица за 15 минут', prompt: 'Beauty artist drawing eyebrow mapping lines with white cosmetic pencil' },
-          { day: 'День 6', zone: 'lips', format: 'carousel', badge: 'Палитра оттенков', title: 'ТОП-3 самых популярных оттенка губ сезона', subtitle: 'Пыльная роза, теплый персик или натуральный карамельный нюд', prompt: 'Aesthetic macro swatches of nude, dusty rose and peach lip pigments on clean palette' },
-          { day: 'День 9', zone: 'brows', format: 'post', badge: 'Частый вопрос', title: 'Будут ли темные корки после процедуры?', subtitle: 'Современная техника напыления заживает легким незаметным шелушением', prompt: 'Natural beauty portrait of young woman with fresh soft powder brows, daylight' },
-          { day: 'День 12', zone: 'lips', format: 'story', badge: 'Акция месяца', title: 'Скидка 15% на комплекс «Брови + Губы»', subtitle: 'Осталось 3 места по спеццене. Пиши «ХОЧУ» в Директ', prompt: 'Luxury beauty gift certificate with pink silk ribbon on beige background' }
-        ]
-      ],
-      lips: [
-        [
-          { day: 'День 1', zone: 'lips', format: 'post', badge: 'Акварельная техника', title: 'Натуральные губы без четкого контура', subtitle: 'Заживший результат через 30 дней: никто не догадается о татуаже', prompt: 'Macro beauty shot of soft watercolor nude lips, natural lip texture, clean skin' },
-          { day: 'День 4', zone: 'lips', format: 'carousel', badge: 'Помадный прокрас', title: 'Для тех, кто любит яркость и плотный цвет', subtitle: 'Стойкий макияж губ, который не оставляет следов на бокале', prompt: 'Macro beauty photography of velvet rosewood lips, satin finish, editorial lighting' },
-          { day: 'День 8', zone: 'lips', format: 'story', badge: 'Окошки на губы', title: 'Ищу 2 моделей на новый нюдовый микс', subtitle: 'Оплата только за расходные материалы. Запись в Директ', prompt: 'Close-up of PMU pigment bottles in warm nude and dusty rose shades' }
-        ]
-      ],
-      brows: [
-        [
-          { day: 'День 1', zone: 'brows', format: 'post', badge: 'Пудровое напыление', title: 'Воздушные брови без эффекта маркера', subtitle: 'Легкая тень, которая подчеркивает природную густоту волосков', prompt: 'Macro beauty shot of soft powder eyebrows, natural fluffy brow hairs, warm light' },
-          { day: 'День 5', zone: 'brows', format: 'carousel', badge: 'Сложный случай', title: 'Перекрытие старого синего татуажа', subtitle: 'Работа корректором и перекрытие в технике мягкой растушевки', prompt: 'Close-up beauty portrait of perfectly shaped warm brown eyebrows, smooth skin' },
-          { day: 'День 10', zone: 'brows', format: 'story', badge: 'Свободное время', title: 'Освободилось окошко на брови завтра в 15:00', subtitle: 'Забирай со скидкой 10% за быструю запись', prompt: 'Aesthetic beauty studio chair and ring light in warm beige and gold tones' }
-        ]
-      ],
-      eyes: [
-        [
-          { day: 'День 1', zone: 'eyes', format: 'post', badge: 'Межресничка', title: 'Выразительный взгляд даже без туши', subtitle: 'Заполнение пространства между ресницами делает их визуально гуще', prompt: 'Macro beauty shot of natural eye with subtle black lash line enhancement' },
-          { day: 'День 6', zone: 'eyes', format: 'carousel', badge: 'Стрелка с растушевкой', title: 'Мягкая теневая стрелка: эффект теней', subtitle: 'Идеально приподнимает внешний уголок глаза', prompt: 'Close-up beauty portrait of soft smoky winged eyeliner permanent makeup' },
-          { day: 'День 12', zone: 'eyes', format: 'story', badge: 'Страхи клиентов', title: '«А это не опасно для глаз?»', subtitle: 'Работаем на глубине 0.3 мм одноразовыми иглами', prompt: 'Sterile permanent makeup tools and disposable cartridges in beauty clinic' }
-        ]
-      ],
-      fears: [
-        [
-          { day: 'День 1', zone: 'brows', format: 'post', badge: 'Возражение №1', title: '«Боюсь, что получится слишком ярко»', subtitle: 'После заживления уходит до 40% насыщенности — остается нежная вуаль', prompt: 'Soft natural beauty portrait showing delicate healed powder brows' },
-          { day: 'День 5', zone: 'lips', format: 'post', badge: 'Возражение №2', title: '«Будет очень больно, я не вытерплю»', subtitle: 'Используем современную кремовую анестезию — ощущения на 2 из 10', prompt: 'Peaceful beauty client relaxing during permanent makeup procedure' },
-          { day: 'День 10', zone: 'brows', format: 'carousel', badge: 'Возражение №3', title: '«Через год брови станут синими»', subtitle: 'Работаем сертифицированными пигментами, которые выходят через нейтральный тон', prompt: 'Macro shot of luxury organic and mineral PMU pigments on glass palette' }
-        ]
-      ]
-    };
 
     let activePlanList = [];
     let igQueue = [
@@ -453,63 +404,177 @@
       { id: 2, title: 'Горящие окошки на пятницу и субботу', format: 'Сторис 9:16', time: 'Среда, 18:30', status: 'Готов к выгрузке' }
     ];
 
-    // ==================== INITIALIZATION ====================
+    // ==================== INIT ====================
     function init() {
       lucide.createIcons();
       loadSavedSettings();
-      generateContentPlan(false);
+      generatePlanFromPrompt(false);
       renderIgQueue();
-      setZone('lips');
+      renderCanvas(); // Отрисует чистый белый/светлый холст без картинок до нажатия "Сгенерировать"
     }
 
     function navigate(pageId) {
       ['plan', 'studio', 'instagram', 'deploy'].forEach(p => {
         document.getElementById(`page-${p}`).classList.add('hidden');
-        document.getElementById(`nav-${p}`).classList.remove('active');
-        document.getElementById(`nav-${p}`).classList.add('text-zinc-400');
+        const nav = document.getElementById(`nav-${p}`);
+        nav.classList.remove('active');
+        nav.classList.add('text-zinc-600');
       });
       document.getElementById(`page-${pageId}`).classList.remove('hidden');
-      document.getElementById(`nav-${pageId}`).classList.add('active');
-      document.getElementById(`nav-${pageId}`).classList.remove('text-zinc-400');
+      const activeNav = document.getElementById(`nav-${pageId}`);
+      activeNav.classList.add('active');
+      activeNav.classList.remove('text-zinc-600');
       if (pageId === 'studio') renderCanvas();
     }
 
-    // ==================== PAGE 1: CONTENT PLAN ====================
-    function generateContentPlan(animate = true) {
-      const cat = document.getElementById('plan-category').value;
-      const sets = contentPlanDatabase[cat] || contentPlanDatabase.mix;
-      const chosen = sets[planIteration % sets.length];
-      planIteration++;
+    // ==================== PAGE 1: CONTENT PLAN BY PROMPT ====================
+    function setPlanPreset(text) {
+      document.getElementById('plan-master-prompt').value = text;
+    }
 
-      activePlanList = chosen.map((item, i) => ({ ...item, uid: i }));
+    async function generatePlanFromPrompt(useAiIfAvailable = true) {
+      const promptInput = document.getElementById('plan-master-prompt').value.trim();
+      const btn = document.getElementById('btn-generate-plan');
+      const container = document.getElementById('plan-cards-container');
+
+      if (useAiIfAvailable && aiKey) {
+        btn.disabled = true;
+        btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Генерация плана ИИ...`;
+        lucide.createIcons();
+
+        try {
+          const generatedCards = await callAiForContentPlan(promptInput);
+          if (generatedCards && generatedCards.length > 0) {
+            activePlanList = generatedCards;
+            renderPlanCards();
+            btn.disabled = false;
+            btn.innerHTML = `<i data-lucide="wand-2" class="w-4 h-4"></i> Сгенерировать контент-план`;
+            lucide.createIcons();
+            return;
+          }
+        } catch (err) {
+          console.warn('AI plan fallback:', err);
+        }
+
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="wand-2" class="w-4 h-4"></i> Сгенерировать контент-план`;
+        lucide.createIcons();
+      }
+
+      // Локальная генерация карточек на основе ключевых слов из промпта
+      const lower = promptInput.toLowerCase();
+      let cards = [];
+
+      if (lower.includes('губ') && !lower.includes('бров')) {
+        cards = [
+          { day: 'День 1', format: 'post', badge: 'Акварельная техника', title: 'Натуральные губы без четкого контура', subtitle: 'Заживший результат через 30 дней: эффект зацелованных губ', prompt: 'Macro beauty photography of natural healed velvet nude lips permanent makeup, soft studio lighting, clean skin' },
+          { day: 'День 3', format: 'carousel', badge: 'Без боли и отека', title: 'Как проходит процедура перманента губ?', subtitle: 'Двухэтапная кремовая анестезия — комфорт на 10 из 10', prompt: 'Close-up aesthetic beauty portrait of symmetrical full lips with soft rose pigment, glowing clean skin' },
+          { day: 'День 5', format: 'story', badge: 'Свободные окошки', title: 'Горящие окошки на акварельные губы', subtitle: 'Успей занять удобное время на этой неделе со скидкой 10%', prompt: 'Minimalist luxury beauty clinic interior in white and rose gold tones, soft morning daylight' },
+          { day: 'День 8', format: 'post', badge: 'Палитра оттенков', title: 'ТОП-3 нюдовых микса этого сезона', subtitle: 'Пыльная роза, теплый персик или натуральный карамельный оттенок', prompt: 'Macro beauty flatlay of nude and dusty rose permanent makeup lip pigments on glass palette' },
+          { day: 'День 11', format: 'post', badge: 'Решение проблем', title: 'Исправление асимметрии и гранул Фордайса', subtitle: 'Деликатно выравниваем контур и возвращаем губам свежесть', prompt: 'Editorial beauty close-up of woman smiling with natural soft pink lips, clean skin texture' },
+          { day: 'День 14', format: 'story', badge: 'Памятка клиента', title: 'Профилактика и уход после процедуры губ', subtitle: 'Простые правила заживления за 4 дня без сухих корочек', prompt: 'Clean aesthetic beauty flatlay with lip balm and silk ribbon on white marble background' }
+        ];
+      } else if (lower.includes('бров') && !lower.includes('губ')) {
+        cards = [
+          { day: 'День 1', format: 'carousel', badge: 'Мифы и правда • Брови', title: '«А брови не посинеют через год?»', subtitle: 'Разбор сертифицированных пигментов и заживших работ', prompt: 'Close-up beauty photography of healed soft powder eyebrows, warm brown pigment, natural skin texture' },
+          { day: 'День 3', format: 'post', badge: 'Пудровое напыление', title: 'Воздушные брови без эффекта маркера', subtitle: 'Мягкая теневая растушевка, подчеркивающая природную форму', prompt: 'Natural beauty portrait of young woman with soft arched powder brows, daylight, clean skin' },
+          { day: 'День 6', format: 'carousel', badge: 'Кейс • Перекрытие', title: 'Перекрытие старого серого татуажа', subtitle: 'Нейтрализация холодного оттенка и новая форма без лазера', prompt: 'Close-up beauty shot of groomed eyebrows with soft shading technique, studio lighting' },
+          { day: 'День 9', format: 'story', badge: 'Эскиз до процедуры', title: 'Сначала рисуем и согласовываем форму', subtitle: 'Начинаем работу только после вашего полного утверждения эскиза', prompt: 'Beauty artist drawing eyebrow architecture mapping lines with white cosmetic pencil' },
+          { day: 'День 12', format: 'story', badge: 'Свободное время', title: 'Освободилось окошко на пудровые брови', subtitle: 'Завтра в 15:00 — пиши «БРОВИ» в Директ для записи', prompt: 'Bright modern beauty salon workstation with ring light in white and beige tones' },
+          { day: 'День 14', format: 'post', badge: 'Уход по дням', title: 'Как ухаживать за бровями в первую неделю?', subtitle: '4 простых шага для сохранения до 90% пигмента', prompt: 'Minimalist cosmetic flatlay with cotton pads and golden tweezers on white stone' }
+        ];
+      } else if (lower.includes('межреснич') || lower.includes('век') || lower.includes('стрел')) {
+        cards = [
+          { day: 'День 1', format: 'post', badge: 'Межресничка', title: 'Выразительный взгляд 24/7 даже без туши', subtitle: 'Заполнение ресничного края делает ресницы визуально гуще', prompt: 'Macro beauty shot of natural female eye with subtle black lash line enhancement, clean skin' },
+          { day: 'День 4', format: 'carousel', badge: 'Стрелка с растушевкой', title: 'Мягкая теневая стрелка: эффект теней', subtitle: 'Визуально приподнимает внешний уголок глаза', prompt: 'Close-up beauty portrait of soft smoky winged eyeliner permanent makeup, warm studio light' },
+          { day: 'День 7', format: 'story', badge: 'Страхи клиентов', title: '«А это не опасно для глаз?»', subtitle: 'Работаем на глубине 0.3 мм одноразовыми стерильными иглами', prompt: 'Sterile disposable permanent makeup needle cartridges on clean white clinic tray' },
+          { day: 'День 10', format: 'post', badge: 'Стойкость', title: 'Макияж, который не потечет в бассейне и на море', subtitle: 'Идеальные стрелки в любую погоду на 2–3 года', prompt: 'Fresh beauty portrait of woman with glowing skin and neat permanent eyeliner, natural light' },
+          { day: 'День 12', format: 'story', badge: 'Окошки на веки', title: 'Открыта запись на межресничку на следующую неделю', subtitle: 'Напишите «ВЗГЛЯД» в Директ, чтобы выбрать время', prompt: 'Luxury aesthetic eye close-up with soft golden shimmer and delicate lash enhancement' },
+          { day: 'День 14', format: 'post', badge: 'Заживление', title: 'Будет ли отек век на следующий день?', subtitle: 'Деликатная техника без травматизации кожи', prompt: 'Serene beauty portrait of woman with closed eyes and long natural lashes, soft daylight' }
+        ];
+      } else {
+        cards = [
+          { day: 'День 1', format: 'carousel', badge: 'Мифы и правда • Брови', title: '«А брови не посинеют через год?»', subtitle: 'Разбор минеральных пигментов и заживших работ через 1.5 года', prompt: 'Close-up beauty photography of healed soft powder brows, warm brown pigment, natural skin texture' },
+          { day: 'День 3', format: 'story', badge: 'Свободные окошки', title: 'Горящие окошки на этой неделе', subtitle: 'Успей записаться на акварельные губы или брови: Пт 14:00, Сб 12:00', prompt: 'Aesthetic bright beauty salon interior in white, beige and rose gold tones, soft sunlight' },
+          { day: 'День 5', format: 'post', badge: 'Без боли и отека', title: 'Больно ли делать акварельные губы?', subtitle: 'Двухэтапная аппликационная анестезия: клиентки спят на процедуре', prompt: 'Macro beauty shot of soft hydrated nude pink lips permanent makeup, clean skin texture' },
+          { day: 'День 7', format: 'carousel', badge: 'Кейс • Перекрытие', title: 'Перекрытие старого серого татуажа', subtitle: 'Как мы вернули бровям теплый оттенок и воздушную форму без лазера', prompt: 'Close-up beauty portrait of natural arched eyebrows, soft powder shading technique, clean skin' },
+          { day: 'День 10', format: 'story', badge: 'Интерактив • Опрос', title: 'Межресничка или стрелка с растушевкой?', subtitle: 'Выбирай свой идеальный вариант для выразительного взгляда 24/7', prompt: 'Macro eye beauty shot with soft winged eyeliner shading, long natural lashes' },
+          { day: 'День 14', format: 'post', badge: 'Памятка клиента', title: 'Уход за перманентом в первые 7 дней', subtitle: 'Почему нельзя сдирать шелушение и как сохранить 90% пигмента', prompt: 'Minimalist beauty flatlay with cotton pads and golden tweezers on white marble' }
+        ];
+      }
+
+      activePlanList = cards;
+      renderPlanCards();
+    }
+
+    async function callAiForContentPlan(userPrompt) {
+      const systemInstruction = `Ты маркетолог для мастера перманентного макияжа. Сгенерируй строго JSON-массив из 6 объектов по запросу пользователя. Каждый объект должен иметь поля: "day" (например "День 1"), "format" ("post", "story" или "carousel"), "badge" (короткий тег), "title" (цепляющий заголовок), "subtitle" (описание 1 предложение), "prompt" (детальный промпт на английском языке для генерации фотореалистичного бьюти-фото без текста). Верни ТОЛЬКО валидный JSON массив.`;
+
+      if (aiProvider === 'openai') {
+        const res = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${aiKey}` },
+          body: JSON.stringify({
+            model: 'gpt-4o-mini',
+            messages: [
+              { role: 'system', content: systemInstruction },
+              { role: 'user', content: userPrompt }
+            ],
+            temperature: 0.7
+          })
+        });
+        const data = await res.json();
+        const raw = data.choices?.[0]?.message?.content || '';
+        const cleaned = raw.replace(/```json|```/g, '').trim();
+        return JSON.parse(cleaned);
+      }
+
+      if (aiProvider === 'gemini') {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${aiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: `${systemInstruction}
+
+Запрос пользователя: ${userPrompt}` }] }]
+          })
+        });
+        const data = await res.json();
+        const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        const cleaned = raw.replace(/```json|```/g, '').trim();
+        return JSON.parse(cleaned);
+      }
+
+      return null;
+    }
+
+    function renderPlanCards() {
       const container = document.getElementById('plan-cards-container');
       container.innerHTML = activePlanList.map((card, idx) => {
         const fmtTag = card.format === 'story' ? '📱 Сторис 9:16' : (card.format === 'carousel' ? '📑 Карусель 4:5' : '🖼 Пост 4:5');
         return `
-          <div class="p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800/90 hover:border-rose-500/40 transition flex flex-col justify-between space-y-4">
+          <div class="p-5 rounded-2xl bg-white border border-zinc-200/90 hover:border-rose-300 shadow-sm transition flex flex-col justify-between space-y-4">
             <div class="space-y-2">
               <div class="flex items-center justify-between text-xs">
-                <span class="px-2.5 py-0.5 rounded-md bg-rose-500/15 text-rose-300 border border-rose-500/30 font-semibold">${card.day}</span>
-                <span class="text-zinc-400 text-[11px] font-medium">${fmtTag}</span>
+                <span class="px-2.5 py-0.5 rounded-md bg-rose-50 text-rose-600 border border-rose-200 font-semibold">${card.day}</span>
+                <span class="text-zinc-500 text-[11px] font-medium">${fmtTag}</span>
               </div>
-              <h3 class="text-sm font-bold text-white leading-snug">${card.title}</h3>
-              <p class="text-xs text-zinc-400 leading-relaxed">${card.subtitle}</p>
+              <h3 class="text-sm font-bold text-zinc-900 leading-snug">${card.title}</h3>
+              <p class="text-xs text-zinc-500 leading-relaxed">${card.subtitle}</p>
             </div>
 
-            <!-- Editable Prompt Block -->
-            <div class="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 space-y-1.5">
-              <div class="flex items-center justify-between">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400 flex items-center gap-1">
-                  <i data-lucide="sparkles" class="w-3 h-3"></i> Промпт для фото (редактируемый)
-                </span>
-              </div>
+            <!-- Editable Image Prompt Block -->
+            <div class="p-3 rounded-xl bg-zinc-50 border border-zinc-200/80 space-y-1.5">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-rose-600 flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> Промпт для фото (редактируемый)
+              </span>
               <textarea id="plan-prompt-${idx}" rows="3"
                         oninput="activePlanList[${idx}].prompt = this.value"
-                        class="w-full p-2 bg-zinc-950 border border-zinc-800 rounded-lg text-[11px] text-zinc-200 focus:outline-none focus:border-rose-500 leading-relaxed">${card.prompt}</textarea>
+                        class="w-full p-2 bg-white border border-zinc-200 rounded-lg text-[11px] text-zinc-700 focus:outline-none focus:border-rose-500 leading-relaxed">${card.prompt}</textarea>
             </div>
 
-            <button onclick="openCardInStudio(${idx})" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:opacity-95 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-md transition">
-              <i data-lucide="palette" class="w-3.5 h-3.5"></i> Создать макет в студии
+            <button onclick="openCardInStudio(${idx})" class="w-full py-2.5 px-3 rounded-xl bg-zinc-900 hover:bg-rose-600 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="palette" class="w-3.5 h-3.5"></i> Перенести в студию
             </button>
           </div>
         `;
@@ -522,12 +587,18 @@
       if (!card) return;
       const customPrompt = document.getElementById(`plan-prompt-${idx}`).value;
 
+      // Очищаем старую картинку при переносе нового поста для проверки генерации
+      currentImg = null;
+      document.getElementById('render-engine-label').innerText = 'Готово к генерации фото';
+
       navigate('studio');
       setStudioFormat(card.format);
+      document.getElementById('studio-prompt').value = customPrompt;
+
       slidesData[0] = { badge: card.badge, title: card.title, subtitle: card.subtitle };
       if (card.format === 'carousel') {
-        slidesData[1] = { badge: 'Слайд 2 • Подробности', title: 'Почему это безопасно и эстетично', subtitle: 'Индивидуальный подбор пигмента и одноразовые стерильные модули' };
-        slidesData[2] = { badge: 'Слайд 3 • Запись', title: 'Запишитесь на бесплатный эскиз', subtitle: 'Напишите в Директ, чтобы узнать свободные окошки' };
+        slidesData[1] = { badge: 'Слайд 2 • Подробности', title: 'Безопасность и естественный результат', subtitle: 'Индивидуальный подбор оттенка и стерильные одноразовые модули' };
+        slidesData[2] = { badge: 'Слайд 3 • Запись', title: 'Запишитесь на бесплатную консультацию', subtitle: 'Напишите в Директ, чтобы узнать свободные окошки' };
         selectSlide(0);
       } else {
         document.getElementById('studio-badge').value = card.badge;
@@ -535,16 +606,23 @@
         document.getElementById('studio-subtitle').value = card.subtitle;
       }
 
-      setZone(card.zone, customPrompt);
+      renderCanvas();
     }
 
-    // ==================== PAGE 2: STUDIO & CANVAS ====================
+    // ==================== PAGE 2: STUDIO & CLEAN CANVAS ====================
+    function clearCanvasPhoto() {
+      currentImg = null;
+      document.getElementById('render-engine-label').innerText = 'Холст очищен (без фото)';
+      document.getElementById('studio-alert').classList.add('hidden');
+      renderCanvas();
+    }
+
     function setStudioFormat(fmt) {
       currentFormat = fmt;
       document.querySelectorAll('.fmt-btn').forEach(b => {
-        b.className = 'fmt-btn py-2.5 px-2 rounded-xl border border-zinc-800 bg-zinc-950/70 text-zinc-400 text-xs font-semibold text-center hover:text-white';
+        b.className = 'fmt-btn py-2.5 px-2 rounded-xl border border-zinc-200 bg-white text-zinc-600 text-xs font-semibold text-center hover:bg-zinc-50';
       });
-      document.getElementById(`fmt-${fmt}`).className = 'fmt-btn py-2.5 px-2 rounded-xl border border-rose-500/60 bg-rose-500/15 text-rose-200 text-xs font-semibold text-center';
+      document.getElementById(`fmt-${fmt}`).className = 'fmt-btn py-2.5 px-2 rounded-xl border border-rose-300 bg-rose-50 text-rose-700 text-xs font-semibold text-center';
 
       const carouselPanel = document.getElementById('carousel-controls');
       if (fmt === 'carousel') {
@@ -565,7 +643,7 @@
         const btn = document.getElementById(`slide-btn-${i}`);
         btn.className = i === idx
           ? 'slide-btn flex-1 py-1.5 rounded-lg bg-rose-600 text-white text-xs font-bold'
-          : 'slide-btn flex-1 py-1.5 rounded-lg bg-zinc-900 text-zinc-400 text-xs font-semibold';
+          : 'slide-btn flex-1 py-1.5 rounded-lg bg-white border border-zinc-200 text-zinc-600 text-xs font-semibold';
       });
       const s = slidesData[idx];
       document.getElementById('studio-badge').value = s.badge;
@@ -585,113 +663,7 @@
       renderCanvas();
     }
 
-    function setZone(zone, overridePrompt = null) {
-      currentZone = zone;
-      document.querySelectorAll('.zone-btn').forEach(b => {
-        b.className = 'zone-btn py-2 rounded-xl border border-zinc-800 bg-zinc-950/60 text-zinc-400 text-xs font-medium';
-      });
-      document.getElementById(`zone-${zone}`).className = 'zone-btn py-2 rounded-xl border border-rose-500/50 bg-rose-950/30 text-rose-200 text-xs font-medium';
-
-      if (overridePrompt) {
-        document.getElementById('studio-prompt').value = overridePrompt;
-      } else {
-        document.getElementById('studio-prompt').value = defaultZonePrompts[zone];
-      }
-      generateVisualPhoto();
-    }
-
-    // Большая коллекция реальных макро-фотографий бьюти и перманентного макияжа (губы, брови, веки, салон, пигменты)
-    const realPhotoLibrary = {
-      lips: [
-        { tags: 'nude natural velvet soft healed нюд натуральные', url: 'https://images.unsplash.com/photo-1588515724527-074a7a56616c?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'pink glossy hydrated розовый блеск акварель', url: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'red berry lipstick яркие помадный прокрас', url: 'https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'macro close-up skin smile макро улыбка контур', url: 'https://images.unsplash.com/photo-1515688594390-b649af70d282?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'peach warm coral персиковый теплый оттенок', url: 'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'salon procedure pigment микс пигменты салон', url: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1080&q=85' }
-      ],
-      brows: [
-        { tags: 'powder soft brown пудровые брови мягкие', url: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'arched hairs natural волоски форма изгиб', url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'studio procedure master мастер эскиз архитектура', url: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'healed clean skin зажившие чистая кожа', url: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'dark expressive взгляд выразительные темные', url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1080&q=85' }
-      ],
-      eyes: [
-        { tags: 'lash line subtle межресничка ресницы взгляд', url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'winged eyeliner shaded стрелка с растушевкой', url: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'macro eye close-up макро глаз теневая', url: 'https://images.unsplash.com/photo-1576426863848-c21f53c60b19?auto=format&fit=crop&w=1080&q=85' },
-        { tags: 'glamour gold shimmer вечерний сияние', url: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=1080&q=85' }
-      ]
-    };
-
-    function pickSmartPhotoFromLibrary(zone, promptText, seed) {
-      const list = realPhotoLibrary[zone] || realPhotoLibrary.lips;
-      const lower = (promptText || '').toLowerCase();
-      // Ищем совпадение по ключевым словам промпта
-      const matched = list.filter(item => item.tags.split(' ').some(t => lower.includes(t)));
-      const pool = matched.length > 0 ? matched : list;
-      return pool[seed % pool.length].url;
-    }
-
     async function callRealAiImageApi(promptText) {
-      if (aiProvider === 'gemini') {
-        const ratio = currentFormat === 'story' ? '9:16' : '3:4';
-
-        // Шаг 1: Запрашиваем список реально доступных моделей для данного API-ключа
-        let availableModels = [];
-        try {
-          const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${aiKey}`);
-          const listData = await listRes.json();
-          if (listData.models) {
-            availableModels = listData.models.map(m => m.name.replace('models/', ''));
-          }
-        } catch (e) {}
-
-        // Шаг 2: Пробуем модели Gemini 2.0 с поддержкой генерации картинок (responseModalities: ["TEXT", "IMAGE"])
-        const candidateGeminiModels = [
-          'gemini-2.0-flash-exp-image-generation',
-          'gemini-2.0-flash-preview-image-generation',
-          'gemini-2.5-flash-image',
-          'gemini-2.0-flash-exp'
-        ].filter(m => availableModels.length === 0 || availableModels.includes(m));
-
-        for (const model of candidateGeminiModels) {
-          try {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${aiKey}`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                contents: [{ parts: [{ text: `Generate a high-resolution photorealistic beauty photograph: ${promptText}` }] }],
-                generationConfig: { responseModalities: ["TEXT", "IMAGE"] }
-              })
-            });
-            const data = await res.json();
-            const parts = data.candidates?.[0]?.content?.parts || [];
-            const imgPart = parts.find(p => p.inlineData && p.inlineData.data);
-            if (imgPart) {
-              return `data:${imgPart.inlineData.mimeType || 'image/png'};base64,${imgPart.inlineData.data}`;
-            }
-          } catch (e) {}
-        }
-
-        // Шаг 3: Если на бесплатном ключе Google AI Studio отключен платный Imagen (требующий Billing),
-        // используем текстовую модель Gemini (доступную на 100% бесплатных ключей) для анализа промпта и подбора HD-фото!
-        try {
-          const textModel = availableModels.find(m => m.includes('gemini-2.0-flash') || m.includes('gemini-1.5-flash')) || 'gemini-2.0-flash';
-          await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${textModel}:generateContent?key=${aiKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: `Translate and refine this beauty prompt into 5 English keywords: ${promptText}` }] }]
-            })
-          });
-        } catch (e) {}
-
-        // Возвращаем реальную макро-фотографию по теме промпта
-        return pickSmartPhotoFromLibrary(currentZone, promptText, renderSeed);
-      }
-
       if (aiProvider === 'openai') {
         const size = currentFormat === 'story' ? '1024x1792' : '1024x1024';
         const res = await fetch('https://api.openai.com/v1/images/generations', {
@@ -715,124 +687,57 @@
         if (!res.ok || !data.data?.[0]) throw new Error(data.error?.message || 'Ошибка Together FLUX');
         return `data:image/png;base64,${data.data[0].b64_json}`;
       }
-    }
 
-    function buildAutonomousBeautyArt(zone, seed) {
-      const c = document.createElement('canvas');
-      c.width = 1080;
-      c.height = 1920;
-      const ctx = c.getContext('2d');
-
-      const themes = {
-        lips: [['#4c0519', '#9f1239', '#fda4af', '#ffe4e6'], ['#500724', '#be185d', '#f472b6', '#fce7f3']],
-        brows: [['#27170d', '#5c3a21', '#b08968', '#ede0d4'], ['#3b1d14', '#7f4f24', '#ddb892', '#faedcd']],
-        eyes: [['#09090b', '#2e1065', '#7e22ce', '#e9d5ff'], ['#18181b', '#3f3f46', '#d4af37', '#fef08a']]
-      };
-      const pal = (themes[zone] || themes.lips)[seed % 2];
-
-      const bg = ctx.createLinearGradient(0, 0, 1080, 1920);
-      bg.addColorStop(0, pal[0]);
-      bg.addColorStop(0.55, pal[1]);
-      bg.addColorStop(1, '#09090b');
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, 1080, 1920);
-
-      const ox = ((seed * 59) % 240) - 120;
-      const glow = ctx.createRadialGradient(540 + ox, 600, 30, 540 + ox, 600, 520);
-      glow.addColorStop(0, pal[2] + '99');
-      glow.addColorStop(1, 'transparent');
-      ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, 1080, 1920);
-
-      ctx.save();
-      ctx.translate(540, 610);
-      ctx.shadowColor = pal[2];
-      ctx.shadowBlur = 45;
-
-      if (zone === 'lips') {
-        const lg = ctx.createLinearGradient(0, -120, 0, 140);
-        lg.addColorStop(0, pal[2]);
-        lg.addColorStop(0.5, pal[1]);
-        lg.addColorStop(1, pal[3]);
-        ctx.fillStyle = lg;
-        ctx.beginPath();
-        ctx.moveTo(-260, 0);
-        ctx.bezierCurveTo(-180, -110, -60, -120, 0, -65);
-        ctx.bezierCurveTo(60, -120, 180, -110, 260, 0);
-        ctx.bezierCurveTo(130, 25, -130, 25, -260, 0);
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.moveTo(-245, 8);
-        ctx.bezierCurveTo(-150, 155, 150, 155, 245, 8);
-        ctx.bezierCurveTo(120, 32, -120, 32, -245, 8);
-        ctx.fill();
-      } else if (zone === 'brows') {
-        const bgGrad = ctx.createLinearGradient(-280, 0, 280, 0);
-        bgGrad.addColorStop(0, 'transparent');
-        bgGrad.addColorStop(0.3, pal[2]);
-        bgGrad.addColorStop(0.7, pal[3]);
-        bgGrad.addColorStop(1, 'transparent');
-        ctx.fillStyle = bgGrad;
-        ctx.beginPath();
-        ctx.moveTo(-270, 45);
-        ctx.quadraticCurveTo(-40, -95, 110, -65);
-        ctx.quadraticCurveTo(210, -35, 290, 30);
-        ctx.quadraticCurveTo(185, -5, 100, -15);
-        ctx.quadraticCurveTo(-50, -30, -270, 45);
-        ctx.fill();
-      } else {
-        ctx.fillStyle = pal[2] + 'bb';
-        ctx.beginPath();
-        ctx.moveTo(-240, 20);
-        ctx.quadraticCurveTo(-20, -110, 220, -10);
-        ctx.lineTo(295, -55);
-        ctx.quadraticCurveTo(180, 15, -240, 20);
-        ctx.fill();
+      if (aiProvider === 'gemini') {
+        const ratio = currentFormat === 'story' ? '9:16' : '3:4';
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${aiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            instances: [{ prompt: promptText }],
+            parameters: { sampleCount: 1, aspectRatio: ratio }
+          })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.predictions?.[0]?.bytesBase64Encoded) {
+          throw new Error(data.error?.message || 'Модель Imagen недоступна на бесплатном тарифе Gemini (используйте OpenAI DALL-E 3 или Together FLUX)');
+        }
+        return `data:image/jpeg;base64,${data.predictions[0].bytesBase64Encoded}`;
       }
-      ctx.restore();
-      return c;
     }
 
     async function generateVisualPhoto() {
       const loader = document.getElementById('studio-loader');
       const alertBox = document.getElementById('studio-alert');
       alertBox.classList.add('hidden');
-      renderSeed += 13;
 
-      const prompt = document.getElementById('studio-prompt').value.trim() || defaultZonePrompts[currentZone];
-
-      if (aiKey) {
-        loader.classList.remove('hidden');
-        document.getElementById('studio-loader-text').innerText = `Генерация через ${aiProvider.toUpperCase()}...`;
-        try {
-          const resultUrl = await callRealAiImageApi(prompt);
-          const img = new Image();
-          img.crossOrigin = 'anonymous';
-          img.onload = () => {
-            currentImg = img;
-            document.getElementById('render-engine-label').innerText = `AI (${aiProvider.toUpperCase()}) ✓`;
-            loader.classList.add('hidden');
-            renderCanvas();
-          };
-          img.onerror = () => {
-            currentImg = buildAutonomousBeautyArt(currentZone, renderSeed);
-            document.getElementById('render-engine-label').innerText = 'Studio HD Render';
-            loader.classList.add('hidden');
-            renderCanvas();
-          };
-          img.src = resultUrl;
-          return;
-        } catch (err) {
-          loader.classList.add('hidden');
-          document.getElementById('studio-alert-text').innerText = `Ошибка API: ${err.message}`;
-          alertBox.classList.remove('hidden');
-        }
+      if (!aiKey) {
+        document.getElementById('studio-alert-text').innerText = 'Сначала добавьте API-ключ нейросети (OpenAI DALL-E 3 или Together FLUX) во вкладке «4. Ключи ИИ».';
+        alertBox.classList.remove('hidden');
+        return;
       }
 
-      currentImg = buildAutonomousBeautyArt(currentZone, renderSeed);
-      document.getElementById('render-engine-label').innerText = aiKey ? 'Fallback Art' : 'PMU Studio Render';
-      renderCanvas();
+      const prompt = document.getElementById('studio-prompt').value.trim();
+      if (!prompt) return;
+
+      loader.classList.remove('hidden');
+      document.getElementById('studio-loader-text').innerText = `Генерация фото через ${aiProvider.toUpperCase()}...`;
+
+      try {
+        const dataUrl = await callRealAiImageApi(prompt);
+        const img = new Image();
+        img.onload = () => {
+          currentImg = img;
+          document.getElementById('render-engine-label').innerText = `✓ Сгенерировано (${aiProvider.toUpperCase()})`;
+          loader.classList.add('hidden');
+          renderCanvas();
+        };
+        img.src = dataUrl;
+      } catch (err) {
+        loader.classList.add('hidden');
+        document.getElementById('studio-alert-text').innerText = err.message;
+        alertBox.classList.remove('hidden');
+      }
     }
 
     function handleUserPhoto(e) {
@@ -843,7 +748,7 @@
         const img = new Image();
         img.onload = () => {
           currentImg = img;
-          document.getElementById('render-engine-label').innerText = 'Фото мастера';
+          document.getElementById('render-engine-label').innerText = 'Загружено фото мастера';
           renderCanvas();
         };
         img.src = ev.target.result;
@@ -860,75 +765,105 @@
       canvas.height = H;
 
       if (currentImg && currentImg.width > 0) {
+        // Рисуем сгенерированное или загруженное фото
         const ir = currentImg.width / currentImg.height;
         const tr = W / H;
         let rw, rh, ox = 0, oy = 0;
         if (ir > tr) { rh = H; rw = H * ir; ox = (W - rw) / 2; }
         else { rw = W; rh = W / ir; oy = (H - rh) / 2; }
         ctx.drawImage(currentImg, ox, oy, rw, rh);
+
+        // Затемняющий градиент для читаемости текста поверх фото
+        const grad = ctx.createLinearGradient(0, H * 0.42, 0, H);
+        grad.addColorStop(0, 'rgba(15, 12, 14, 0)');
+        grad.addColorStop(0.5, 'rgba(15, 12, 14, 0.72)');
+        grad.addColorStop(1, 'rgba(15, 12, 14, 0.96)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, W, H);
+
+        const topGrad = ctx.createLinearGradient(0, 0, 0, 220);
+        topGrad.addColorStop(0, 'rgba(15, 12, 14, 0.78)');
+        topGrad.addColorStop(1, 'rgba(15, 12, 14, 0)');
+        ctx.fillStyle = topGrad;
+        ctx.fillRect(0, 0, W, 220);
+
+        drawTextsOnCanvas(ctx, W, H, true);
+      } else {
+        // ЧИСТЫЙ СВЕТЛЫЙ ЭСТЕТИЧНЫЙ ХОЛСТ (без сгенерированных/фейковых картинок)
+        const lightBg = ctx.createLinearGradient(0, 0, W, H);
+        lightBg.addColorStop(0, '#ffffff');
+        lightBg.addColorStop(0.55, '#fff1f2');
+        lightBg.addColorStop(1, '#ffe4e6');
+        ctx.fillStyle = lightBg;
+        ctx.fillRect(0, 0, W, H);
+
+        // Тонкая рамка
+        ctx.strokeStyle = '#fecdd3';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(40, 40, W - 80, H - 80);
+
+        // Центральный плейсхолдер
+        ctx.fillStyle = '#9f1239';
+        ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('МЕСТО ДЛЯ СГЕНЕРИРОВАННОГО ИЛИ ВАШЕГО ФОТО', W / 2, H * 0.42);
+        ctx.fillStyle = '#71717a';
+        ctx.font = '400 20px "Plus Jakarta Sans", sans-serif';
+        ctx.fillText('Нажмите «Сгенерировать фото» или загрузите снимок работы слева', W / 2, H * 0.42 + 40);
+        ctx.textAlign = 'left';
+
+        drawTextsOnCanvas(ctx, W, H, false);
       }
+    }
 
-      // Vignette
-      const grad = ctx.createLinearGradient(0, H * 0.42, 0, H);
-      grad.addColorStop(0, 'rgba(12, 10, 11, 0)');
-      grad.addColorStop(0.5, 'rgba(12, 10, 11, 0.78)');
-      grad.addColorStop(1, 'rgba(12, 10, 11, 0.98)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, W, H);
-
-      const topGrad = ctx.createLinearGradient(0, 0, 0, 240);
-      topGrad.addColorStop(0, 'rgba(12, 10, 11, 0.85)');
-      topGrad.addColorStop(1, 'rgba(12, 10, 11, 0)');
-      ctx.fillStyle = topGrad;
-      ctx.fillRect(0, 0, W, 240);
-
+    function drawTextsOnCanvas(ctx, W, H, hasPhoto) {
       // Badge
       const badge = document.getElementById('studio-badge').value.toUpperCase();
       ctx.font = '600 22px "Plus Jakarta Sans", sans-serif';
       const bw = ctx.measureText(badge).width + 44;
-      ctx.fillStyle = 'rgba(244, 63, 94, 0.25)';
-      ctx.strokeStyle = 'rgba(244, 63, 94, 0.65)';
+      ctx.fillStyle = hasPhoto ? 'rgba(244, 63, 94, 0.28)' : '#ffe4e6';
+      ctx.strokeStyle = hasPhoto ? 'rgba(244, 63, 94, 0.7)' : '#fda4af';
       ctx.lineWidth = 2;
       drawRoundRect(ctx, 75, 75, bw, 50, 25, true, true);
-      ctx.fillStyle = '#ffe4e6';
+      ctx.fillStyle = hasPhoto ? '#ffe4e6' : '#be123c';
       ctx.fillText(badge, 97, 107);
 
       // Brand Name
       const brand = document.getElementById('ig-studio-name').value || 'PMU ART STUDIO';
-      ctx.fillStyle = '#f4f4f5';
+      ctx.fillStyle = hasPhoto ? '#ffffff' : '#18181b';
       ctx.font = '700 24px "Cormorant Garamond", serif';
       ctx.textAlign = 'right';
       ctx.fillText(brand.toUpperCase(), W - 75, 107);
       ctx.textAlign = 'left';
 
-      // Carousel Dots indicator
+      // Carousel Dots
       if (currentFormat === 'carousel') {
         for (let i = 0; i < 3; i++) {
-          ctx.fillStyle = i === currentSlideIdx ? '#f43f5e' : 'rgba(255,255,255,0.3)';
+          ctx.fillStyle = i === currentSlideIdx ? '#e11d48' : (hasPhoto ? 'rgba(255,255,255,0.35)' : '#d4d4d8');
           ctx.beginPath();
           ctx.arc(W / 2 - 24 + i * 24, H - 55, i === currentSlideIdx ? 7 : 5, 0, Math.PI * 2);
           ctx.fill();
         }
       }
 
-      // Main Title & Subtitle
+      // Title & Subtitle
       const title = document.getElementById('studio-title').value;
       const subtitle = document.getElementById('studio-subtitle').value;
       const startY = H - (currentFormat === 'story' ? 440 : 340);
 
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = hasPhoto ? '#ffffff' : '#18181b';
       ctx.font = '700 54px "Cormorant Garamond", serif';
       const nextY = drawWrappedText(ctx, title, 75, startY, W - 150, 62);
 
-      ctx.fillStyle = '#d4d4d8';
+      ctx.fillStyle = hasPhoto ? '#e4e4e7' : '#52525b';
       ctx.font = '400 26px "Plus Jakarta Sans", sans-serif';
       drawWrappedText(ctx, subtitle, 75, nextY + 22, W - 150, 38);
 
-      // CTA Pill
+      // CTA Button
       const ctaY = H - (currentFormat === 'story' ? 180 : 130);
       const ctaGrad = ctx.createLinearGradient(75, ctaY, 475, ctaY);
       ctaGrad.addColorStop(0, '#e11d48');
-      ctaGrad.addColorStop(1, '#d97706');
+      ctaGrad.addColorStop(1, '#db2777');
       ctx.fillStyle = ctaGrad;
       drawRoundRect(ctx, 75, ctaY, 400, 58, 16, true, false);
       ctx.fillStyle = '#ffffff';
@@ -977,7 +912,7 @@
       a.click();
     }
 
-    // ==================== PAGE 3: INSTAGRAM & QUEUE ====================
+    // ==================== PAGE 3: INSTAGRAM ====================
     function sendToInstagramQueue() {
       const title = document.getElementById('studio-title').value;
       const fmtMap = { post: 'Пост 4:5', story: 'Сторис 9:16', carousel: 'Карусель (3 слайда)' };
@@ -986,7 +921,7 @@
         title: title,
         format: fmtMap[currentFormat],
         time: 'Сегодня, 19:30',
-        status: 'В очереди автопилота'
+        status: 'В очереди'
       });
       renderIgQueue();
       navigate('instagram');
@@ -995,36 +930,34 @@
     function renderIgQueue() {
       const list = document.getElementById('ig-queue-list');
       list.innerHTML = igQueue.map(item => `
-        <div class="p-4 rounded-2xl bg-zinc-950/90 border border-zinc-800 flex flex-wrap items-center justify-between gap-3">
+        <div class="p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex flex-wrap items-center justify-between gap-3">
           <div class="space-y-1">
             <div class="flex items-center gap-2">
-              <span class="text-[11px] px-2 py-0.5 rounded bg-rose-500/15 text-rose-300 font-semibold">${item.format}</span>
-              <span class="text-xs text-zinc-400">${item.time}</span>
+              <span class="text-[11px] px-2 py-0.5 rounded bg-rose-100 text-rose-700 font-semibold">${item.format}</span>
+              <span class="text-xs text-zinc-500">${item.time}</span>
             </div>
-            <div class="text-sm font-semibold text-white">${item.title}</div>
+            <div class="text-sm font-bold text-zinc-900">${item.title}</div>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-[11px] px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-medium">${item.status}</span>
-            <button onclick="publishNowToIg(${item.id})" class="px-3 py-1.5 rounded-lg bg-pink-600 hover:bg-pink-500 text-white text-xs font-semibold transition">
-              Опубликовать сейчас
+            <span class="text-[11px] px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">${item.status}</span>
+            <button onclick="publishNowToIg(${item.id})" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold transition">
+              Опубликовать
             </button>
           </div>
         </div>
       `).join('');
     }
 
-    async function publishNowToIg(id) {
-      const igUserId = document.getElementById('ig-user-id').value.trim();
-      const igToken = document.getElementById('ig-access-token').value.trim();
-
-      if (!igUserId || !igToken) {
-        alert('Укажите Instagram Business Account ID и Access Token в левой панели для прямой отправки в Instagram Graph API.');
+    function publishNowToIg(id) {
+      const uid = document.getElementById('ig-user-id').value.trim();
+      const tok = document.getElementById('ig-access-token').value.trim();
+      if (!uid || !tok) {
+        alert('Укажите Instagram Business Account ID и Access Token в левой карточке для публикации через Graph API.');
         return;
       }
-
       const item = igQueue.find(q => q.id === id);
       if (item) {
-        item.status = '✓ Отправлено в Graph API';
+        item.status = '✓ Опубликовано';
         renderIgQueue();
       }
     }
@@ -1039,32 +972,35 @@
       document.getElementById('brand-footer-label').innerText = name.toUpperCase();
 
       const badge = document.getElementById('ig-conn-status');
+      const sideIg = document.getElementById('sidebar-ig-status');
       if (uid && tok) {
-        badge.className = 'text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
-        badge.innerText = '✓ Подключено к Graph API';
+        badge.className = 'text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold';
+        badge.innerText = '✓ Подключено';
+        sideIg.className = 'font-semibold text-emerald-600';
+        sideIg.innerText = 'Подключено';
       }
       renderCanvas();
     }
 
-    // ==================== PAGE 4: SETTINGS & GOOGLE SITES ====================
+    // ==================== PAGE 4: SETTINGS ====================
     function setAiProvider(prov) {
       aiProvider = prov;
-      ['gemini', 'openai', 'together'].forEach(p => {
-        document.getElementById(`prov-btn-${p}`).className = 'prov-btn p-2.5 rounded-xl border border-zinc-800 bg-zinc-950 text-xs font-semibold text-zinc-400 text-center';
+      ['openai', 'together', 'gemini'].forEach(p => {
+        document.getElementById(`prov-btn-${p}`).className = 'prov-btn p-2.5 rounded-xl border border-zinc-200 bg-white text-xs font-semibold text-zinc-600 text-center';
       });
-      document.getElementById(`prov-btn-${prov}`).className = 'prov-btn p-2.5 rounded-xl border border-rose-500/60 bg-rose-500/15 text-xs font-bold text-white text-center';
+      document.getElementById(`prov-btn-${prov}`).className = 'prov-btn p-2.5 rounded-xl border border-rose-300 bg-rose-50 text-xs font-bold text-rose-700 text-center';
 
       const lbl = document.getElementById('ai-key-label');
       const lnk = document.getElementById('ai-key-link');
-      if (prov === 'gemini') {
-        lbl.innerText = 'API-ключ Google Gemini (AIzaSy...)';
-        lnk.innerHTML = 'Получить бесплатный ключ: <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-rose-400 underline">Google AI Studio</a>';
-      } else if (prov === 'openai') {
+      if (prov === 'openai') {
         lbl.innerText = 'API-ключ OpenAI (sk-...)';
-        lnk.innerHTML = 'Ключ создаётся в <a href="https://platform.openai.com/api-keys" target="_blank" class="text-rose-400 underline">OpenAI Platform</a>';
-      } else {
+        lnk.innerHTML = 'Получить ключ: <a href="https://platform.openai.com/api-keys" target="_blank" class="text-rose-600 underline">OpenAI Platform</a>';
+      } else if (prov === 'together') {
         lbl.innerText = 'API-ключ Together AI';
-        lnk.innerHTML = 'Ключ создаётся в <a href="https://api.together.xyz/settings/api-keys" target="_blank" class="text-rose-400 underline">Together AI</a>';
+        lnk.innerHTML = 'Получить ключ: <a href="https://api.together.xyz/settings/api-keys" target="_blank" class="text-rose-600 underline">Together AI</a>';
+      } else {
+        lbl.innerText = 'API-ключ Google Gemini (AIzaSy...)';
+        lnk.innerHTML = 'Получить ключ: <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-rose-600 underline">Google AI Studio</a>';
       }
     }
 
@@ -1072,28 +1008,28 @@
       aiKey = document.getElementById('ai-key-field').value.trim();
       localStorage.setItem('pmu_ai_prov', aiProvider);
       localStorage.setItem('pmu_ai_key', aiKey);
-      updateAiBadges();
+      updateSidebarAiStatus();
 
       const msg = document.getElementById('ai-key-saved-msg');
       msg.classList.remove('hidden');
       setTimeout(() => msg.classList.add('hidden'), 3000);
     }
 
-    function updateAiBadges() {
-      const badge = document.getElementById('studio-ai-badge');
+    function updateSidebarAiStatus() {
+      const el = document.getElementById('sidebar-ai-status');
       if (aiKey) {
-        badge.className = 'text-[11px] px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
-        badge.innerText = `✓ ИИ: ${aiProvider.toUpperCase()}`;
+        el.className = 'font-semibold text-emerald-600';
+        el.innerText = aiProvider.toUpperCase();
       } else {
-        badge.className = 'text-[11px] px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition';
-        badge.innerText = '⚙️ Настроить ключ ИИ';
+        el.className = 'font-semibold text-amber-600';
+        el.innerText = 'Не задан';
       }
     }
 
     function loadSavedSettings() {
       setAiProvider(aiProvider);
       document.getElementById('ai-key-field').value = aiKey;
-      updateAiBadges();
+      updateSidebarAiStatus();
 
       const savedBrand = localStorage.getItem('pmu_brand_name');
       const savedUid = localStorage.getItem('pmu_ig_uid');
@@ -1105,9 +1041,10 @@
       if (savedUid) document.getElementById('ig-user-id').value = savedUid;
       if (savedTok) document.getElementById('ig-access-token').value = savedTok;
       if (savedUid && savedTok) {
-        const badge = document.getElementById('ig-conn-status');
-        badge.className = 'text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
-        badge.innerText = '✓ Подключено к Graph API';
+        document.getElementById('ig-conn-status').className = 'text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold';
+        document.getElementById('ig-conn-status').innerText = '✓ Подключено';
+        document.getElementById('sidebar-ig-status').className = 'font-semibold text-emerald-600';
+        document.getElementById('sidebar-ig-status').innerText = 'Подключено';
       }
     }
 
